@@ -1,10 +1,11 @@
 import express from "express";
 
+import { config } from "./config";
 import { homeRouter } from "@/routes/home";
+import { notFoundHandler } from "@/handlers/utils";
 import { stagesRouter } from "@/routes/stages";
 
-import { notFoundHandler } from "@/handlers/utils";
-
+const { HOSTNAME, PORT } = config;
 const app = express();
 
 // middlewares
@@ -14,9 +15,9 @@ app.use(express.json());
 app.use("/", homeRouter);
 app.use("/stages", stagesRouter);
 
+// for every other routes, send not found
 app.all("/*", notFoundHandler);
 
-// start the server
-app.listen(5000, "localhost", () => {
-  console.log("server: listening at http://localhost:5000");
+app.listen(PORT, HOSTNAME, () => {
+  console.log(`server: listening at http://${HOSTNAME}:${PORT}`);
 });

@@ -4,5 +4,6 @@ dist/
 
 !.vscode/extensions.json
 *.local
+*.prod
 .idea
 .DS_Store
