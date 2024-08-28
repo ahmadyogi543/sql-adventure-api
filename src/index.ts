@@ -1,9 +1,9 @@
 import express from "express";
 
-import { homeRouter } from "./routes/home";
-import { stagesRouter } from "./routes/stages";
+import { homeRouter } from "@/routes/home";
+import { stagesRouter } from "@/routes/stages";
 
-import { notFoundHandler } from "./handlers/utils";
+import { notFoundHandler } from "@/handlers/utils";
 
 const app = express();
 

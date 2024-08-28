@@ -1,6 +1,6 @@
 import express from "express";
 
-import { welcomeHandler } from "../handlers/utils/welcomeHandler";
+import { welcomeHandler } from "@/handlers/utils/welcomeHandler";
 
 export const homeRouter = express.Router();
 

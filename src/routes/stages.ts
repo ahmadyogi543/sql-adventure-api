@@ -4,7 +4,7 @@ import {
   getAllHeadStagesHandler,
   getAllStagesHandler,
   getOneStageHandler,
-} from "../handlers/stages";
+} from "@/handlers/stages";
 
 export const stagesRouter = Router();
 
