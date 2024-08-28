@@ -1,0 +1,23 @@
+{
+  "name": "sql-adventure-api",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch .",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "Ahmad Yogi",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
