@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS stages (
     title TEXT NOT NULL,
     introduction TEXT NOT NULL,
     closing TEXT NOT NULL,
-    filepath TEXT
+    db_name TEXT
 );
 
 ```

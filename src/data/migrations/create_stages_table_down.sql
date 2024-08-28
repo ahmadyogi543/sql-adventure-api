@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS stages;
+
+DROP TABLE IF EXISTS missions;
+
+DROP TABLE IF EXISTS dialogs;
+
+DROP TABLE IF EXISTS sql_queries;
