@@ -7,6 +7,7 @@ import { homeRouter } from "@/routes/home";
 import { notFoundHandler } from "@/handlers/utils";
 import { stagesRouter } from "@/routes/stages";
 import { usersRouter } from "./routes/users";
+import { authRouter } from "./routes/auth";
 
 const { LOGGER_FORMAT } = constants;
 const { HOSTNAME, PORT } = config;
@@ -22,6 +23,7 @@ app.use(morgan("custom"));
 
 // routes
 app.use("/", homeRouter);
+app.use("/auth", authRouter);
 app.use("/stages", stagesRouter);
 app.use("/users", usersRouter);
 
