@@ -7,7 +7,6 @@ export type UserProgress = {
 export type User = {
   id: number;
   username: string;
-  email: string;
   password_hash: string;
   score: number;
 };
