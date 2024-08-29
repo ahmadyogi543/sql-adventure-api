@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getAllUsersProgress } from "@/models/users/getAllUsersProgress";
+import { getAllUsersProgress } from "@/models/users";
 import {
   sendInternalServerErrorJSON,
   sendOKJSON,

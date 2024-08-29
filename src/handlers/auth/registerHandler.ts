@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 
-import { addOneUser } from "@/models/users/addOneUser";
+import { addOneUser, getOneUserByUsername } from "@/models/users";
 import { AddOneUserResult, GetOneUserResult } from "@/models/users/types";
-import { getOneUserByUsername } from "@/models/users/getOneUserByUsername";
 import {
   sendBadRequestJSON,
   sendCreatedJSON,

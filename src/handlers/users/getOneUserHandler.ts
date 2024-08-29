@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getOneUser } from "@/models/users/getOneUser";
+import { getOneUser } from "@/models/users";
 import {
   sendBadRequestJSON,
   sendInternalServerErrorJSON,

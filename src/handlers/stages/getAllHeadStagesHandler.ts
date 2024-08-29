@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getAllHeadStages } from "@/models/stages/getAllHeadStages";
+import { getAllHeadStages } from "@/models/stages";
 import {
   sendInternalServerErrorJSON,
   sendOKJSON,
