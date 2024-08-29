@@ -1,5 +1,5 @@
 import { db } from "@/data/db";
-import { GetAllStagesResult } from "../types";
+import { GetAllStagesResult } from "./types";
 import { getStagesJSON } from "@/helpers/getStagesJSON";
 
 export function getAllStages(): GetAllStagesResult {

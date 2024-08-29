@@ -1,6 +1,5 @@
 import { db } from "@/data/db";
-import { GetAllHeadStagesResult } from "../types";
-import { HeadStage } from "./records";
+import { GetAllHeadStagesResult, HeadStage } from "./types";
 
 export function getAllHeadStages(): GetAllHeadStagesResult {
   try {

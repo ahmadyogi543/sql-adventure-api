@@ -1,4 +1,4 @@
-import { Dialog, Stage } from "@/models/stages/records";
+import { Dialog, Stage } from "@/models/stages/types";
 
 type StagesJSON = {
   stage_id: number;

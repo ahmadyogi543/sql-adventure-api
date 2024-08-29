@@ -1,7 +1,21 @@
 import { Response, Request } from "express";
 
-import { sendOKJSON } from "@/helpers/responseSender";
+import { getAllUsersProgress } from "@/models/users/getAllUsersProgress";
+import {
+  sendInternalServerErrorJSON,
+  sendOKJSON,
+} from "@/helpers/responseSender";
 
 export function getAllUsersProgressHandler(_: Request, res: Response) {
-  sendOKJSON(null, "retrieved all users progress successfully", res);
+  const result = getAllUsersProgress();
+  if (result.error) {
+    sendInternalServerErrorJSON(result.error, res);
+    return;
+  }
+
+  sendOKJSON(
+    { users_progress: result.usersProgress },
+    "retrieved all users progress successfully",
+    res
+  );
 }

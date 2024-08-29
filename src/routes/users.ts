@@ -19,4 +19,4 @@ usersRouter.get("/progress", getAllUsersProgressHandler);
 usersRouter.get("/:id", getOneUserHandler);
 
 // get one users progress with id
-usersRouter.get("/progress/:id", getOneUserProgressHandler);
+usersRouter.get("/progress/:userId", getOneUserProgressHandler);
