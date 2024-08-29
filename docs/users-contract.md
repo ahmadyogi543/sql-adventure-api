@@ -46,14 +46,12 @@
   "data": {
     "users_progress": [
       {
-        "userId": 1,
-        "values": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-        "last_played": "2023-12-31 23:59:59"
+        "user_id": 1,
+        "values": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
       },
       {
-        "userId": 2,
-        "values": [100, 100, 50],
-        "last_played": "2023-08-21 23:59:59"
+        "user_id": 2,
+        "values": [100, 100, 50]
       }
       // ...
     ]
@@ -69,9 +67,8 @@
 {
   "data": {
     "user_progress": {
-      "userId": 1,
-      "values": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-      "last_played": "2023-12-31 23:59:59"
+      "user_id": 1,
+      "values": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
     }
   },
   "message": "retrieved one user progress successfully",
