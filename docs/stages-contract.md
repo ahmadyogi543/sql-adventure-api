@@ -1,39 +1,103 @@
 # SQL Adventure API Contract (STAGES)
 
-- HTTP GET /stages/:id
+- HTTP GET /stages (200 OK)
 
 ```jsonc
-[
-  {
-    "id": 1,
-    "title": "Menjelajah Pulau Kembang",
-    "introduction": "Selamat datang di Pulau Kembang! Kamu...",
-    "closing": "Selamat! Kamu telah menyelesaikan semua misi...",
-    "db_name": "stage1.db",
-    "missions": [
+{
+  "data": {
+    "stages": [
       {
-        "title": "Menampilkan Biaya Kunjungan",
-        "dialogs": [
+        "id": 1,
+        "title": "Menjelajah Pulau Kembang",
+        "introduction": "Selamat datang di Pulau Kembang! Kamu...",
+        "closing": "Selamat! Kamu telah menyelesaikan semua misi...",
+        "db_name": "stage1.db",
+        "missions": [
           {
-            "type": "NARRATION",
-            "text": "Mengetahui biaya kunjungan sangat penting..."
-          },
-          {
-            "type": "INSTRUCTION",
-            "text": "Ketikan query untuk menampilkan...",
-            "sql": {
-              "type": "READ",
-              "query": "SELECT * FROM biaya",
-              "validation": null
-            }
+            "title": "Menampilkan Biaya Kunjungan",
+            "dialogs": [
+              {
+                "type": "NARRATION",
+                "text": "Mengetahui biaya kunjungan sangat penting..."
+              },
+              {
+                "type": "INSTRUCTION",
+                "text": "Ketikan query untuk menampilkan...",
+                "sql": {
+                  "type": "READ",
+                  "query": "SELECT * FROM biaya",
+                  "validation": null
+                }
+              }
+              // ...
+            ]
           }
           // ...
         ]
       }
+    ]
+  },
+  "message": "retrieved all stages successfully",
+  "status": "success"
+}
+```
+
+- HTTP GET /stages/:id (200 OK)
+
+```jsonc
+{
+  "data": {
+    "stage": {
+      "id": 1,
+      "title": "Menjelajah Pulau Kembang",
+      "introduction": "Selamat datang di Pulau Kembang! Kamu...",
+      "closing": "Selamat! Kamu telah menyelesaikan semua misi...",
+      "db_name": "stage1.db",
+      "missions": [
+        {
+          "title": "Menampilkan Biaya Kunjungan",
+          "dialogs": [
+            {
+              "type": "NARRATION",
+              "text": "Mengetahui biaya kunjungan sangat penting..."
+            },
+            {
+              "type": "INSTRUCTION",
+              "text": "Ketikan query untuk menampilkan...",
+              "sql": {
+                "type": "READ",
+                "query": "SELECT * FROM biaya",
+                "validation": null
+              }
+            }
+            // ...
+          ]
+        }
+        // ...
+      ]
+    }
+  },
+  "message": "retrieved one stage successfully",
+  "status": "success"
+}
+```
+
+- HTTP GET /stages/head (200 OK)
+
+```jsonc
+{
+  "data": {
+    "head_stages": [
+      {
+        "id": 1,
+        "title": "Menjelajah Pulau Kembang"
+      }
       // ...
     ]
-  }
-]
+  },
+  "message": "retrieved all head stages successfully",
+  "status": "success"
+}
 ```
 
 - DATA DEFINITION
