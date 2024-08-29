@@ -2,18 +2,18 @@ import express from "express";
 import morgan from "morgan";
 
 import { config } from "./config";
+import { constants } from "./constants";
 import { homeRouter } from "@/routes/home";
 import { notFoundHandler } from "@/handlers/utils";
 import { stagesRouter } from "@/routes/stages";
 
+const { LOGGER_FORMAT } = constants;
 const { HOSTNAME, PORT } = config;
+
 const app = express();
 
 // logger setup
-morgan.format(
-  "custom",
-  "=> server: :method :url :status :res[content-length] - :response-time ms"
-);
+morgan.format("custom", LOGGER_FORMAT);
 app.use(morgan("custom"));
 
 // middlewares
