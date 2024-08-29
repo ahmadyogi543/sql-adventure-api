@@ -6,7 +6,7 @@ export function getOneUserProgress(id: number): GetOneUserProgress {
   try {
     const stmt = db.prepare(
       `
-SELECT DISTINCT u.id as user_id,
+SELECT u.id as user_id,
        p.value as progress_value
 FROM users u
 LEFT JOIN progresses p ON u.id = p.user_id
