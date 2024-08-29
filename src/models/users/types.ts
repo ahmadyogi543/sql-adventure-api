@@ -2,7 +2,6 @@
 export type UserProgress = {
   user_id: number;
   values: number[];
-  last_played: Date;
 };
 
 export type User = {

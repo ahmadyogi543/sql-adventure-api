@@ -7,8 +7,7 @@ export function getAllUsersProgress(): GetAllUsersProgress {
     const stmt = db.prepare(
       `
 SELECT DISTINCT u.id as user_id,
-       p.value as progress_value,
-       p.last_played as progress_last_played
+       p.value as progress_value
 FROM users u
 LEFT JOIN progresses p ON u.id = p.user_id
 ORDER BY u.id, p.id;
