@@ -7,7 +7,7 @@ import {
   sendCreatedJSON,
   sendInternalServerErrorJSON,
 } from "@/helpers/responseSender";
-import { validateRegisterBody } from "@/helpers/validator";
+import { validateUsernameAndPassword } from "@/helpers/validator";
 
 type RegisterBody = {
   username: string | undefined;
@@ -20,7 +20,7 @@ export function registerHandler(
 ) {
   const { username, password } = req.body;
 
-  const [valid, message] = validateRegisterBody(username, password);
+  const [valid, message] = validateUsernameAndPassword(username, password);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;

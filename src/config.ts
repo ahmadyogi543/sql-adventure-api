@@ -10,6 +10,8 @@ dotenv.config({
 
 export const config = {
   DB_PATH: `./src/data/bin/${process.env.DB_NAME}`,
+  JWT_SECRET_KEY: process.env.JWT_SECRET_KEY as string,
+  JWT_REFRESH_SECRET_KEY: process.env.JWT_REFRESH_SECRET_KEY as string,
   HOSTNAME: process.env.HOSTNAME as string,
   PORT: parseInt(process.env.PORT!),
 };

@@ -9,7 +9,7 @@ export function validateIdParam(id: number): [valid: boolean, message: string] {
   return [true, ""];
 }
 
-export function validateRegisterBody(
+export function validateUsernameAndPassword(
   username: string | undefined,
   password: string | undefined
 ): [boolean, string] {
