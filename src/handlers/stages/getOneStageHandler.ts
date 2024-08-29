@@ -1,6 +1,12 @@
 import { Response, Request } from "express";
 
-import { sendBadRequestJSON } from "@/helpers/responseSender";
+import { getOneStage } from "@/models/stages/getOneStage";
+import {
+  sendBadRequestJSON,
+  sendInternalServerErrorJSON,
+  sendNotFoundJSON,
+  sendOKJSON,
+} from "@/helpers/responseSender";
 import { validateIdParam } from "@/helpers/validator";
 
 type Params = {
@@ -19,7 +25,16 @@ export function getOneStageHandler(
     return;
   }
 
-  res.json({
-    message: "TODO: implement to get one stage data",
-  });
+  const result = getOneStage(id);
+  if (result.error) {
+    sendInternalServerErrorJSON(result.error, res);
+    return;
+  }
+
+  if (!result.stage) {
+    sendNotFoundJSON(`cannot find stage with id ${id}`, res);
+    return;
+  }
+
+  sendOKJSON({ stage: result.stage }, "retrieved one stage successfully", res);
 }
