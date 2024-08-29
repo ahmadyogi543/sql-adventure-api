@@ -23,3 +23,8 @@ export type Stage = {
   db_name: string;
   missions: Mission[];
 };
+
+export type HeadStage = {
+  id: number;
+  title: string;
+};

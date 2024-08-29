@@ -6,7 +6,7 @@ import {
   sendOKJSON,
 } from "@/helpers/responseSender";
 
-export function getAllStagesHandler(req: Request, res: Response) {
+export function getAllStagesHandler(_: Request, res: Response) {
   const result = getAllStages();
   if (result.error) {
     sendInternalServerErrorJSON(result.error, res);
