@@ -6,6 +6,7 @@ import { constants } from "./constants";
 import { homeRouter } from "@/routes/home";
 import { notFoundHandler } from "@/handlers/utils";
 import { stagesRouter } from "@/routes/stages";
+import { usersRouter } from "./routes/users";
 
 const { LOGGER_FORMAT } = constants;
 const { HOSTNAME, PORT } = config;
@@ -22,6 +23,7 @@ app.use(morgan("custom"));
 // routes
 app.use("/", homeRouter);
 app.use("/stages", stagesRouter);
+app.use("/users", usersRouter);
 
 // for every other routes, send not found
 app.all("/*", notFoundHandler);
