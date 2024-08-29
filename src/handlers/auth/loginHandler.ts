@@ -10,12 +10,12 @@ import { isPasswordMatch } from "@/helpers/isPasswordMatch";
 import { signJWT } from "@/helpers/signJWT";
 import { validateUsernameAndPassword } from "@/helpers/validator";
 
-type LoginBody = {
+type Body = {
   username: string | undefined;
   password: string | undefined;
 };
 
-export function loginHandler(req: Request<{}, {}, LoginBody>, res: Response) {
+export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
   const { username, password } = req.body;
 
   const [valid, message] = validateUsernameAndPassword(username, password);
