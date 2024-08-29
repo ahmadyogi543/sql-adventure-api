@@ -3,7 +3,7 @@ import * as path from "path";
 import Database from "better-sqlite3";
 
 import { constants } from "@/constants";
-import { config } from "../config";
+import { config } from "@/config";
 
 const { DB_PATH } = config;
 

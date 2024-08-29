@@ -10,6 +10,6 @@ dotenv.config({
 
 export const config = {
   DB_PATH: `./src/data/bin/${process.env.DB_NAME}`,
-  HOSTNAME: process.env.HOSTNAME,
+  HOSTNAME: process.env.HOSTNAME as string,
   PORT: parseInt(process.env.PORT!),
 };

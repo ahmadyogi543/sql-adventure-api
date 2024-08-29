@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .vscode/*
+src/data/bin/*
 
 !.vscode/extensions.json
 *.local
