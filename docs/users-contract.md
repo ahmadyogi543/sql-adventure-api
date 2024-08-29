@@ -83,7 +83,7 @@
 
 ```sql
 -- create users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
@@ -92,7 +92,7 @@ CREATE TABLE users (
 );
 
 -- create progresses table
-CREATE TABLE progresses (
+CREATE TABLE IF NOT EXISTS progresses (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   users_id INTEGER NOT NULL,
   value INTEGER NOT NULL DEFAULT 0,

@@ -1,0 +1,17 @@
+-- create users table
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    score INTEGER NOT NULL DEFAULT 0
+);
+
+-- create progresses table
+CREATE TABLE IF NOT EXISTS progresses (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  users_id INTEGER NOT NULL,
+  value INTEGER NOT NULL DEFAULT 0,
+  last_played TEXT DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE
+);

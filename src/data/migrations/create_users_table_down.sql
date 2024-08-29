@@ -1,0 +1,3 @@
+DROP TABLE users IF EXISTS;
+
+DROP TABLE progresses IF EXISTS;
