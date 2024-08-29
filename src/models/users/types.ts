@@ -31,3 +31,8 @@ export type GetOneUserProgress = {
   userProgress: UserProgress | null;
   error: Error | null;
 };
+
+export type AddOneUserResult = {
+  user: { id: number; username: string } | null;
+  error: Error | null;
+};

@@ -2,7 +2,7 @@ import { UserProgress } from "@/models/users/types";
 
 type UserProgressJSON = {
   user_id: number;
-  progress_value: number;
+  progress_value: number | null;
 };
 
 export function getUsersProgressJSON(rows: any[]) {
@@ -18,7 +18,7 @@ export function getUsersProgressJSON(rows: any[]) {
       };
     }
 
-    usersProgress[user_id].values.push(progress_value);
+    if (progress_value) usersProgress[user_id].values.push(progress_value);
   });
 
   return Object.values(usersProgress);
