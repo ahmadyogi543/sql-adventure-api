@@ -14,10 +14,10 @@ const app = express();
 
 // logger setup
 morgan.format("custom", LOGGER_FORMAT);
-app.use(morgan("custom"));
 
 // middlewares
 app.use(express.json());
+app.use(morgan("custom"));
 
 // routes
 app.use("/", homeRouter);
