@@ -27,11 +27,13 @@ db.pragma("journal_mode = WAL");
 
 // migrate db to create tables
 try {
-  const query = fs.readFileSync(
-    path.join(__dirname, "migrations", "create_stages_table_up.sql"),
-    { encoding: "utf-8" }
-  );
-  db.exec(query);
+  const files = ["create_users_table_up.sql", "create_stages_table_up.sql"];
+  files.forEach((file) => {
+    const query = fs.readFileSync(path.join(__dirname, "migrations", file), {
+      encoding: "utf-8",
+    });
+    db.exec(query);
+  });
 
   console.log("=> db: migration applied successfully");
 } catch (err) {
