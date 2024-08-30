@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import helmet from "helmet";
 import morgan from "morgan";
 
 import { config } from "./config";
@@ -18,8 +20,10 @@ const app = express();
 morgan.format("custom", LOGGER_FORMAT);
 
 // middlewares
-app.use(express.json());
+app.use(cors());
+app.use(helmet());
 app.use(morgan("custom"));
+app.use(express.json());
 
 // routes
 app.use("/", homeRouter);
