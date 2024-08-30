@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 
-import { addOneToken } from "@/models/tokens";
 import { getOneUserByUsername } from "@/models/users";
 import {
   isPasswordMatch,
@@ -45,12 +44,6 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
     id: user.id,
     username: user.username,
   });
-
-  [error] = addOneToken(user.id, user.username, token);
-  if (error) {
-    sendInternalServerErrorJSON(error, res);
-    return;
-  }
 
   sendOKJSON({ token }, "login successfully", res);
 }

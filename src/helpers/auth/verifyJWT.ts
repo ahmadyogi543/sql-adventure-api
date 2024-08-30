@@ -14,7 +14,7 @@ export function verifyJWT(
       if (err.name === "TokenExpiredError") {
         onTokenExpiredError("bad credentials, token expired");
       } else {
-        onError("bad credentials, token in invalid signature");
+        onError("bad credentials, token is invalid");
       }
       return;
     }

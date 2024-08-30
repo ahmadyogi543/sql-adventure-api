@@ -1,35 +1,38 @@
 import { Request, Response } from "express";
 
-import { deleteOneToken } from "@/models/tokens";
+import { addOneBannedToken } from "@/models/tokens";
 import {
   sendBadRequestJSON,
   sendForbiddenJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
-  validateIdParam,
+  validateJWT,
+  verifyJWT,
 } from "@/helpers";
 
 type Body = {
-  user_id: string | undefined;
+  token: string | undefined;
 };
 
 export function logoutHandler(req: Request<{}, {}, Body>, res: Response) {
-  const [userId, valid, message] = validateIdParam(req.body.user_id);
+  const [token, valid, message] = validateJWT(req.body.token);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
   }
 
-  const [success, error] = deleteOneToken(userId);
-  if (error) {
-    sendInternalServerErrorJSON(error, res);
-    return;
-  }
+  verifyJWT(
+    token,
+    (message) => sendForbiddenJSON(message, res),
+    (message) => sendForbiddenJSON(message, res),
+    (user) => {
+      const [error] = addOneBannedToken(token, user.exp);
+      if (error) {
+        sendInternalServerErrorJSON(error, res);
+        return;
+      }
 
-  if (!success) {
-    sendForbiddenJSON("invalid credentials, user id is not correct", res);
-    return;
-  }
-
-  sendNoContentJSON(res);
+      sendNoContentJSON(res);
+    }
+  );
 }

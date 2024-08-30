@@ -14,11 +14,9 @@ CREATE TABLE IF NOT EXISTS progresses (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- create tokens table
-CREATE TABLE IF NOT EXISTS tokens (
+-- create banned_tokens table
+CREATE TABLE IF NOT EXISTS banned_tokens (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER NOT NULL,
-  username TEXT NOT NULL UNIQUE,
   token TEXT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  expires_at TEXT NOT NULL
 );

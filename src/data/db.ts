@@ -4,6 +4,7 @@ import Database from "better-sqlite3";
 
 import { constants } from "@/constants";
 import { config } from "@/config";
+import { deleteAllBannedTokens } from "@/models/tokens";
 
 const { DB_PATH } = config;
 
@@ -41,8 +42,21 @@ try {
   process.exit(1);
 }
 
+// remove all banned tokens periodically (1 hour)
+const interval = setInterval(() => {
+  const [error] = deleteAllBannedTokens();
+  if (error) {
+    console.error(error);
+    process.exit(1);
+  }
+
+  console.log("=> db: all expired banned_tokens is cleaned");
+}, 60 * 60 * 1000);
+
 // close the db connection if the program received SIGINT
 process.on("SIGINT", () => {
+  clearInterval(interval);
+
   db.close();
   process.exit(0);
 });

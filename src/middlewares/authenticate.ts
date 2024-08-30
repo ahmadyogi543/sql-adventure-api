@@ -1,12 +1,12 @@
 import { NextFunction, Response } from "express";
 
 import { AuthRequest } from "@/types";
-import { deleteOneToken } from "@/models/tokens";
 import {
   sendForbiddenJSON,
   sendInternalServerErrorJSON,
   verifyJWT,
 } from "@/helpers";
+import { findOneBannedToken } from "@/models/tokens";
 
 export function authenticate(
   req: AuthRequest,
@@ -16,27 +16,27 @@ export function authenticate(
   const token = req.header("Authorization")?.split(" ")[1];
 
   if (!token) {
-    sendForbiddenJSON("crendentials is not provided", res);
+    sendForbiddenJSON("crendentials is not provided or in invalid format", res);
+    return;
+  }
+
+  const [found, error] = findOneBannedToken(token);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
+    return;
+  }
+  if (found) {
+    sendForbiddenJSON("bad credentials, token is invalid", res);
     return;
   }
 
   verifyJWT(
     token,
-    (message) => {
-      const [success, error] = deleteOneToken(1);
-      if (error) {
-        sendInternalServerErrorJSON(error, res);
-        return;
-      }
-
-      if (!success) {
-        sendForbiddenJSON("invalid credentials, user id is not correct", res);
-        return;
-      }
-
-      sendForbiddenJSON(message, res);
-    },
+    // on token expired error
     (message) => sendForbiddenJSON(message, res),
+    // on error
+    (message) => sendForbiddenJSON(message, res),
+    // on success
     (user) => {
       req.user = user;
       next();

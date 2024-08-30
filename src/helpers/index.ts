@@ -1,6 +1,10 @@
+export { decodeJWT } from "./auth/decodeJWT";
 export { isPasswordMatch } from "./auth/isPasswordMatch";
 export { signJWT } from "./auth/signJWT";
 export { verifyJWT } from "./auth/verifyJWT";
+
+export { formatDateToTimestamp } from "./format/formatDateToTimeStamp";
+export { formatDateToTimestampUTC } from "./format/formatDatToTimeStampUTC";
 
 export {
   sendBadRequestJSON,
