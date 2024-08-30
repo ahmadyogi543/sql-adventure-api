@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { addOneBannedToken } from "@/models/tokens";
+import { addOneBannedToken, findOneBannedToken } from "@/models/tokens";
 import {
   sendBadRequestJSON,
   sendForbiddenJSON,
@@ -10,12 +10,10 @@ import {
   verifyJWT,
 } from "@/helpers";
 
-type Body = {
-  token: string | undefined;
-};
-
-export function logoutHandler(req: Request<{}, {}, Body>, res: Response) {
-  const [token, valid, message] = validateJWT(req.body.token);
+export function logoutHandler(req: Request, res: Response) {
+  const [token, valid, message] = validateJWT(
+    req.header("Authorization")?.split(" ")[1]
+  );
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
@@ -26,7 +24,19 @@ export function logoutHandler(req: Request<{}, {}, Body>, res: Response) {
     (message) => sendForbiddenJSON(message, res),
     (message) => sendForbiddenJSON(message, res),
     (user) => {
-      const [error] = addOneBannedToken(token, user.exp);
+      // check if token is banned
+      let [found, error] = findOneBannedToken(token);
+      if (error) {
+        sendInternalServerErrorJSON(error, res);
+        return;
+      }
+      if (found) {
+        sendForbiddenJSON("bad credentials, token is invalid", res);
+        return;
+      }
+
+      // banned the token
+      [error] = addOneBannedToken(token, user.exp);
       if (error) {
         sendInternalServerErrorJSON(error, res);
         return;
