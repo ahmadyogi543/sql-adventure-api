@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
 import { addOneUser, getOneUserByUsername } from "@/models/users";
-import { User } from "@/models";
 import {
   sendBadRequestJSON,
   sendCreatedJSON,
   sendInternalServerErrorJSON,
   validateUsernameAndPassword,
 } from "@/helpers";
+import { User } from "@/models";
 
 type RegisterBody = {
   username: string | undefined;

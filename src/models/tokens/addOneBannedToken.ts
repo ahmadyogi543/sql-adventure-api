@@ -1,5 +1,5 @@
 import { db } from "@/data/db";
-import { formatDateToTimestamp, formatDateToTimestampUTC } from "@/helpers";
+import { formatDateToTimestampUTC } from "@/helpers";
 
 export function addOneBannedToken(token: string, expiresAt: number): [Error?] {
   try {

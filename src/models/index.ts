@@ -8,7 +8,7 @@ export type User = {
   id: number;
   username: string;
   password_hash: string;
-  score: number;
+  role: string;
 };
 
 // ++ STAGES ++

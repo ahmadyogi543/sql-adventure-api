@@ -11,7 +11,7 @@
         "username": "cristiano",
         "email": "cristiano@siuu.com",
         "password_hash": "$2a$12$DEuGB9gI.R2vAhW1z77ajuQPyyD8Wrs95.MwqMFA4mltgoNupl8y6",
-        "score": 100
+        "role": "user"
       }
       // ...
     ]

@@ -1,14 +1,14 @@
-INSERT INTO users (username, password_hash, score) VALUES
-('user1', 'hashed_password_1', 100),
-('user2', 'hashed_password_2', 150),
-('user3', 'hashed_password_3', 120),
-('user4', 'hashed_password_4', 200),
-('user5', 'hashed_password_5', 300),
-('user6', 'hashed_password_6', 250),
-('user7', 'hashed_password_7', 180),
-('user8', 'hashed_password_8', 75),
-('user9', 'hashed_password_9', 90),
-('user10','hashed_password_10', 60);
+INSERT INTO users (username, password_hash, role) VALUES
+('user1', 'hashed_password_1', 'admin'),
+('user2', 'hashed_password_2', 'user'),
+('user3', 'hashed_password_3', 'user'),
+('user4', 'hashed_password_4', 'user'),
+('user5', 'hashed_password_5', 'user'),
+('user6', 'hashed_password_6', 'user'),
+('user7', 'hashed_password_7', 'user'),
+('user8', 'hashed_password_8', 'user'),
+('user9', 'hashed_password_9', 'user'),
+('user10','hashed_password_10', 'user');
 
 INSERT INTO progresses (user_id, value) VALUES
 (1, 10),

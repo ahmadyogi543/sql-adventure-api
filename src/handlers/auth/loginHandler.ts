@@ -43,6 +43,7 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
   const token = signJWT({
     id: user.id,
     username: user.username,
+    role: user.role,
   });
 
   sendOKJSON({ token }, "login successfully", res);

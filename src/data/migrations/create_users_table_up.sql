@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
-    score INTEGER NOT NULL DEFAULT 0
+    role TEXT NOT NULL CHECK (role IN ('admin', 'user'))
 );
 
 -- create progresses table

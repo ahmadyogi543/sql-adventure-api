@@ -1,12 +1,23 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-import { AuthRequest } from "@/types";
+import { findOneBannedToken } from "@/models/tokens";
 import {
   sendForbiddenJSON,
   sendInternalServerErrorJSON,
   verifyJWT,
 } from "@/helpers";
-import { findOneBannedToken } from "@/models/tokens";
+
+export type UserPayload = {
+  id: number;
+  username: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
+
+export interface AuthRequest extends Request {
+  user?: UserPayload;
+}
 
 export function authenticate(
   req: AuthRequest,
