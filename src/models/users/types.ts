@@ -1,4 +1,5 @@
 // RECORDS
+
 export type UserProgress = {
   user_id: number;
   values: number[];
