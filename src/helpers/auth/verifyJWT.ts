@@ -1,29 +1,24 @@
 import { verify } from "jsonwebtoken";
 
 import { config } from "@/config";
-import { signJWT } from "./signJWT";
+import { UserPayload } from "@/types";
 
 export function verifyJWT(
   token: string,
   onTokenExpiredError: (message: string) => void,
   onError: (message: string) => void,
-  onSuccess: (token: string) => void
+  onSuccess: (user: UserPayload) => void
 ) {
   verify(token, config.JWT_SECRET_KEY, (err, user: any) => {
     if (err) {
       if (err.name === "TokenExpiredError") {
-        onTokenExpiredError("refresh token expired");
+        onTokenExpiredError("bad credentials, token expired");
       } else {
-        onError("invalid refresh token");
+        onError("bad credentials, token in invalid signature");
       }
       return;
     }
 
-    const token = signJWT({
-      id: user.id,
-      username: user.username,
-    });
-
-    onSuccess(token);
+    onSuccess(user as UserPayload);
   });
 }

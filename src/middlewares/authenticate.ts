@@ -1,11 +1,14 @@
 import { NextFunction, Response } from "express";
-import { verify } from "jsonwebtoken";
 
-import { AuthRequest, UserPayload } from "@/types";
-import { config } from "@/config";
-import { sendForbiddenJSON } from "@/helpers/http/responseSender";
+import { AuthRequest } from "@/types";
+import { deleteOneToken } from "@/models/tokens";
+import {
+  sendForbiddenJSON,
+  sendInternalServerErrorJSON,
+  verifyJWT,
+} from "@/helpers";
 
-export function authenticateToken(
+export function authenticate(
   req: AuthRequest,
   res: Response,
   next: NextFunction
@@ -17,13 +20,26 @@ export function authenticateToken(
     return;
   }
 
-  verify(token, config.JWT_SECRET_KEY, (err, user) => {
-    if (err) {
-      sendForbiddenJSON("invalid credentials, token is not valid", res);
-      return;
-    }
-    req.user = user as UserPayload;
+  verifyJWT(
+    token,
+    (message) => {
+      const [success, error] = deleteOneToken(1);
+      if (error) {
+        sendInternalServerErrorJSON(error, res);
+        return;
+      }
 
-    next();
-  });
+      if (!success) {
+        sendForbiddenJSON("invalid credentials, user id is not correct", res);
+        return;
+      }
+
+      sendForbiddenJSON(message, res);
+    },
+    (message) => sendForbiddenJSON(message, res),
+    (user) => {
+      req.user = user;
+      next();
+    }
+  );
 }
