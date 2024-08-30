@@ -10,6 +10,7 @@ import { notFoundHandler } from "@/handlers/utils";
 import { stagesRouter } from "@/routes/stages";
 import { usersRouter } from "./routes/users";
 import { authRouter } from "./routes/auth";
+import { authenticateToken } from "./middlewares/authenticate";
 
 const { LOGGER_FORMAT } = constants;
 const { HOSTNAME, PORT } = config;
@@ -28,8 +29,8 @@ app.use(express.json());
 // routes
 app.use("/", homeRouter);
 app.use("/auth", authRouter);
-app.use("/stages", stagesRouter);
-app.use("/users", usersRouter);
+app.use("/stages", authenticateToken, stagesRouter);
+app.use("/users", authenticateToken, usersRouter);
 
 // for every other routes, send not found
 app.all("/*", notFoundHandler);
