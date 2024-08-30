@@ -1,21 +1,15 @@
 import { db } from "@/data/db";
-import { GetAllUsersResult, User } from "./types";
+import { User } from "@/models";
 
-export function getAllUsers(): GetAllUsersResult {
+export function getAllUsers(): [User[], Error?] {
   try {
     const stmt = db.prepare("SELECT * FROM users");
     const users = stmt.all() as User[];
 
-    return {
-      users,
-      error: null,
-    };
+    return [users, undefined];
   } catch (err) {
     const error = err as Error;
 
-    return {
-      users: [],
-      error,
-    };
+    return [[], error];
   }
 }

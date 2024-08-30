@@ -1,4 +1,17 @@
-// RECORDS
+// ++ USERS ++
+export type UserProgress = {
+  user_id: number;
+  values: number[];
+};
+
+export type User = {
+  id: number;
+  username: string;
+  password_hash: string;
+  score: number;
+};
+
+// ++ STAGES ++
 export type Query = {
   type: string;
   text: string;
@@ -29,11 +42,3 @@ export type HeadStage = {
   id: number;
   title: string;
 };
-
-// RETURN VALUES
-export type GetAllHeadStagesResult = {
-  headStages: HeadStage[] | null;
-  error: Error | null;
-};
-export type GetAllStagesResult = { stages: Stage[]; error: Error | null };
-export type GetOneStageResult = { stage: Stage | null; error: Error | null };

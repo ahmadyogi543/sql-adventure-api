@@ -1,26 +1,26 @@
 import { Request, Response } from "express";
 
-import { deleteOneRefreshToken } from "@/models/users";
+import { deleteOneToken } from "@/models/tokens";
 import {
   sendBadRequestJSON,
   sendForbiddenJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
-} from "@/helpers/responseSender";
-import { validateIdParam } from "@/helpers/validator";
+  validateIdParam,
+} from "@/helpers";
 
-type LogoutBody = {
+type Body = {
   user_id: string | undefined;
 };
 
-export function logoutHandler(req: Request<{}, {}, LogoutBody>, res: Response) {
+export function logoutHandler(req: Request<{}, {}, Body>, res: Response) {
   const [userId, valid, message] = validateIdParam(req.body.user_id);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
   }
 
-  const { success, error } = deleteOneRefreshToken(userId);
+  const [success, error] = deleteOneToken(userId);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;

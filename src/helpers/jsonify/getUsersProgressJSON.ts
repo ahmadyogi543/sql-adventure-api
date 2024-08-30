@@ -1,4 +1,4 @@
-import { UserProgress } from "@/models/users/types";
+import { UserProgress } from "@/models";
 
 type UserProgressJSON = {
   user_id: number;

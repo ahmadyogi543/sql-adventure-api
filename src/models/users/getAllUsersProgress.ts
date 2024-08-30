@@ -1,8 +1,8 @@
 import { db } from "@/data/db";
-import { GetAllUsersProgress } from "./types";
-import { getUsersProgressJSON } from "@/helpers/getUsersProgressJSON";
+import { getUsersProgressJSON } from "@/helpers/jsonify/getUsersProgressJSON";
+import { UserProgress } from "@/models";
 
-export function getAllUsersProgress(): GetAllUsersProgress {
+export function getAllUsersProgress(): [UserProgress[], Error?] {
   try {
     const stmt = db.prepare(
       `
@@ -15,16 +15,10 @@ ORDER BY u.id, p.id;
     );
     const usersProgress = getUsersProgressJSON(stmt.all());
 
-    return {
-      usersProgress,
-      error: null,
-    };
+    return [usersProgress, undefined];
   } catch (err) {
     const error = err as Error;
 
-    return {
-      usersProgress: [],
-      error,
-    };
+    return [[], error];
   }
 }

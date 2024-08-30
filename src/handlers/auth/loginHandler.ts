@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
 
-import { addOneRefreshToken } from "@/models/users";
+import { addOneToken } from "@/models/tokens";
 import { getOneUserByUsername } from "@/models/users";
 import {
+  isPasswordMatch,
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendOKJSON,
-} from "@/helpers/responseSender";
-import { isPasswordMatch } from "@/helpers/isPasswordMatch";
-import { signJWT } from "@/helpers/signJWT";
-import { validateUsernameAndPassword } from "@/helpers/validator";
+  signJWT,
+  validateUsernameAndPassword,
+} from "@/helpers";
+import { User } from "@/models";
 
 type Body = {
   username: string | undefined;
@@ -17,51 +18,39 @@ type Body = {
 };
 
 export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
-  const { username, password } = req.body;
-
-  const [valid, message] = validateUsernameAndPassword(username, password);
+  const [username, password, valid, message] = validateUsernameAndPassword(
+    req.body.username,
+    req.body.password
+  );
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
   }
 
-  const result = getOneUserByUsername(username!);
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
-    return;
-  }
+  let user: User | undefined;
+  let error: Error | undefined;
 
-  if (!result.user) {
-    sendBadRequestJSON(`the username or password is not correct`, res);
-    return;
-  }
-
-  if (!isPasswordMatch(password!, result.user.password_hash)) {
-    sendBadRequestJSON(`the username or password is not correct`, res);
-    return;
-  }
-
-  const tokens = signJWT({
-    id: result.user.id,
-    username: result.user.username,
-  });
-
-  const { error } = addOneRefreshToken(
-    result.user.id,
-    result.user.username,
-    tokens.refreshToken
-  );
+  [user, error] = getOneUserByUsername(username);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  sendOKJSON(
-    {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
-    },
-    "login successfully",
-    res
-  );
+  if (!user || !isPasswordMatch(password, user.password_hash)) {
+    sendBadRequestJSON(`the username or password is not correct`, res);
+    return;
+  }
+
+  const token = signJWT({
+    id: user.id,
+    username: user.username,
+  });
+
+  [error] = addOneToken(user.id, user.username, token);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
+    return;
+  }
+
+  sendOKJSON({ token }, "login successfully", res);
 }

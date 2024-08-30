@@ -9,7 +9,7 @@ export function verifyJWT(
   onError: (message: string) => void,
   onSuccess: (token: string) => void
 ) {
-  verify(token, config.JWT_REFRESH_SECRET_KEY, (err, user: any) => {
+  verify(token, config.JWT_SECRET_KEY, (err, user: any) => {
     if (err) {
       if (err.name === "TokenExpiredError") {
         onTokenExpiredError("refresh token expired");
@@ -19,11 +19,11 @@ export function verifyJWT(
       return;
     }
 
-    const { accessToken } = signJWT({
+    const token = signJWT({
       id: user.id,
       username: user.username,
     });
 
-    onSuccess(accessToken);
+    onSuccess(token);
   });
 }

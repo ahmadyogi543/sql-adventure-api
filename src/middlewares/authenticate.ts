@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 
 import { AuthRequest, UserPayload } from "@/types";
 import { config } from "@/config";
-import { sendForbiddenJSON } from "@/helpers/responseSender";
+import { sendForbiddenJSON } from "@/helpers/http/responseSender";
 
 export function authenticateToken(
   req: AuthRequest,

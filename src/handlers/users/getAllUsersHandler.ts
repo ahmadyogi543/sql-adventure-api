@@ -1,17 +1,14 @@
 import { Response, Request } from "express";
 
 import { getAllUsers } from "@/models/users";
-import {
-  sendInternalServerErrorJSON,
-  sendOKJSON,
-} from "@/helpers/responseSender";
+import { sendInternalServerErrorJSON, sendOKJSON } from "@/helpers";
 
 export function getAllUsersHandler(_: Request, res: Response) {
-  const result = getAllUsers();
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  const [users, error] = getAllUsers();
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  sendOKJSON({ users: result.users }, "retrieved all users successfully", res);
+  sendOKJSON({ users: users }, "retrieved all users successfully", res);
 }

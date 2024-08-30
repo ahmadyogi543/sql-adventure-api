@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
 import { addOneUser, getOneUserByUsername } from "@/models/users";
-import { AddOneUserResult, GetOneUserResult } from "@/models/users/types";
+import { User } from "@/models";
 import {
   sendBadRequestJSON,
   sendCreatedJSON,
   sendInternalServerErrorJSON,
-} from "@/helpers/responseSender";
-import { validateUsernameAndPassword } from "@/helpers/validator";
+  validateUsernameAndPassword,
+} from "@/helpers";
 
 type RegisterBody = {
   username: string | undefined;
@@ -18,23 +18,25 @@ export function registerHandler(
   req: Request<{}, {}, RegisterBody>,
   res: Response
 ) {
-  const { username, password } = req.body;
-
-  const [valid, message] = validateUsernameAndPassword(username, password);
+  const [username, password, valid, message] = validateUsernameAndPassword(
+    req.body.username,
+    req.body.password
+  );
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
   }
 
-  let result: GetOneUserResult | AddOneUserResult;
+  let user: User | undefined;
+  let error: Error | undefined;
 
-  result = getOneUserByUsername(username!);
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  [user, error] = getOneUserByUsername(username);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  if (result.user) {
+  if (user) {
     sendBadRequestJSON(
       `the user with username ${username} is already exists`,
       res
@@ -42,14 +44,19 @@ export function registerHandler(
     return;
   }
 
-  result = addOneUser(username!, password!);
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  [user, error] = addOneUser(username, password);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
   sendCreatedJSON(
-    result.user,
+    {
+      user: {
+        id: user!.id,
+        username: user!.username,
+      },
+    },
     `registered user with id ${username} successfully`,
     res
   );

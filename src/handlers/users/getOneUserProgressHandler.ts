@@ -6,8 +6,8 @@ import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
-} from "@/helpers/responseSender";
-import { validateIdParam } from "@/helpers/validator";
+  validateIdParam,
+} from "@/helpers";
 
 type GetOneUserProgressParams = {
   userId: string | undefined;
@@ -23,19 +23,19 @@ export function getOneUserProgressHandler(
     return;
   }
 
-  const result = getOneUserProgress(userId);
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  const [userProgress, error] = getOneUserProgress(userId);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  if (!result.userProgress) {
+  if (!userProgress) {
     sendNotFoundJSON(`cannot find progress for user with id ${userId}`, res);
     return;
   }
 
   sendOKJSON(
-    { user_progress: result.userProgress },
+    { user_progress: userProgress },
     "retrieved one user progress successfully",
     res
   );

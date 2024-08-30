@@ -1,8 +1,8 @@
 import { db } from "@/data/db";
-import { GetOneStageResult } from "./types";
-import { getStagesJSON } from "@/helpers/getStagesJSON";
+import { getStagesJSON } from "@/helpers/jsonify/getStagesJSON";
+import { Stage } from "@/models";
 
-export function getOneStage(id: number): GetOneStageResult {
+export function getOneStage(id: number): [Stage?, Error?] {
   try {
     const stmt = db.prepare(
       `
@@ -28,16 +28,10 @@ ORDER BY s.id, m.id, d.id, q.id;
     );
     const [stage] = getStagesJSON(stmt.all(id));
 
-    return {
-      stage,
-      error: null,
-    };
+    return [stage, undefined];
   } catch (err) {
     const error = err as Error;
 
-    return {
-      stage: null,
-      error,
-    };
+    return [undefined, error];
   }
 }

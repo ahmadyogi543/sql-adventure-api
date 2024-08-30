@@ -1,21 +1,14 @@
 import { Response, Request } from "express";
 
 import { getAllStages } from "@/models/stages";
-import {
-  sendInternalServerErrorJSON,
-  sendOKJSON,
-} from "@/helpers/responseSender";
+import { sendInternalServerErrorJSON, sendOKJSON } from "@/helpers";
 
 export function getAllStagesHandler(_: Request, res: Response) {
-  const result = getAllStages();
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  const [stages, error] = getAllStages();
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  sendOKJSON(
-    { stages: result.stages },
-    "retrieved all stages successfully",
-    res
-  );
+  sendOKJSON({ stages: stages }, "retrieved all stages successfully", res);
 }

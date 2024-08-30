@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS progresses (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- create refresh_tokens table
-CREATE TABLE IF NOT EXISTS refresh_tokens (
+-- create tokens table
+CREATE TABLE IF NOT EXISTS tokens (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   username TEXT NOT NULL UNIQUE,

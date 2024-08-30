@@ -6,8 +6,8 @@ import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
-} from "@/helpers/responseSender";
-import { validateIdParam } from "@/helpers/validator";
+  validateIdParam,
+} from "@/helpers";
 
 type GetOneUserParams = {
   id: string | undefined;
@@ -23,16 +23,16 @@ export function getOneUserHandler(
     return;
   }
 
-  const result = getOneUser(id);
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  const [user, error] = getOneUser(id);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  if (!result.user) {
+  if (!user) {
     sendNotFoundJSON(`cannot find user with id ${id}`, res);
     return;
   }
 
-  sendOKJSON({ user: result.user }, "retrieved one user successfully", res);
+  sendOKJSON({ user: user }, "retrieved one user successfully", res);
 }

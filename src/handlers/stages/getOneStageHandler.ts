@@ -6,8 +6,8 @@ import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
-} from "@/helpers/responseSender";
-import { validateIdParam } from "@/helpers/validator";
+  validateIdParam,
+} from "@/helpers";
 
 type Params = {
   id: string | undefined;
@@ -23,16 +23,16 @@ export function getOneStageHandler(
     return;
   }
 
-  const result = getOneStage(id);
-  if (result.error) {
-    sendInternalServerErrorJSON(result.error, res);
+  const [stage, error] = getOneStage(id);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  if (!result.stage) {
+  if (!stage) {
     sendNotFoundJSON(`cannot find stage with id ${id}`, res);
     return;
   }
 
-  sendOKJSON({ stage: result.stage }, "retrieved one stage successfully", res);
+  sendOKJSON({ stage: stage }, "retrieved one stage successfully", res);
 }
