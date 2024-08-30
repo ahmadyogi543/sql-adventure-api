@@ -16,6 +16,13 @@ export function sendCreatedJSON(data: any, message: string, res: Response) {
   });
 }
 
+export function sendForbiddenJSON(message: string, res: Response) {
+  res.status(403).json({
+    status: "failed",
+    message,
+  });
+}
+
 export function sendNoContentJSON(res: Response) {
   res.sendStatus(204);
 }

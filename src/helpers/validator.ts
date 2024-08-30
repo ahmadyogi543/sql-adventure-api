@@ -9,6 +9,18 @@ export function validateIdParam(id: number): [valid: boolean, message: string] {
   return [true, ""];
 }
 
+export function validateJWT(token: string | undefined): [boolean, string] {
+  if (token === undefined) {
+    return [false, "token is missing"];
+  }
+
+  if (token.trim() === "") {
+    return [false, "token should not be empty"];
+  }
+
+  return [true, ""];
+}
+
 export function validateUsernameAndPassword(
   username: string | undefined,
   password: string | undefined
