@@ -13,7 +13,7 @@ export function addOneRefreshToken(
     const stmt = db.prepare(
       `
       INSERT INTO refresh_tokens (user_id, username, token)
-      VALUES (?, ?, ?):
+      VALUES (?, ?, ?);
     `.trim()
     );
     const result = stmt.run(userId, username, token);

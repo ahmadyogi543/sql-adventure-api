@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 
+import { deleteOneRefreshToken } from "@/models/users/deleteOneRefreshToken";
+import { getOneRefreshToken } from "@/models/users/getOneRefreshToken";
 import {
   sendBadRequestJSON,
   sendForbiddenJSON,
+  sendInternalServerErrorJSON,
   sendOKJSON,
 } from "@/helpers/responseSender";
 import { validateJWT } from "@/helpers/validator";
@@ -15,17 +18,34 @@ type Body = {
 export function refreshHandler(req: Request<{}, {}, Body>, res: Response) {
   const { refresh_token } = req.body;
 
-  const [valid, message] = validateJWT(refresh_token);
+  const [token, valid, message] = validateJWT(refresh_token);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
   }
 
-  // TODO: implement to check if refresh token are in storage
+  const { refreshToken, error } = getOneRefreshToken(token);
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
+    return;
+  }
+
+  if (!refreshToken) {
+    sendForbiddenJSON("invalid credentials, refresh token is not correct", res);
+    return;
+  }
 
   verifyJWT(
-    refresh_token!,
-    (message) => sendForbiddenJSON(message, res),
+    token,
+    (message) => {
+      const { error } = deleteOneRefreshToken(refreshToken.userId);
+      if (error) {
+        sendInternalServerErrorJSON(error, res);
+        return;
+      }
+
+      sendForbiddenJSON(message, res);
+    },
     (message) => sendForbiddenJSON(message, res),
     (token) =>
       sendOKJSON(

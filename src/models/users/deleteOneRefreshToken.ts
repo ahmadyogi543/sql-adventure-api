@@ -13,7 +13,7 @@ export function deleteOneRefreshToken(
 
     if (result.lastInsertRowid == 0) {
       return {
-        error: new Error("failed when delete data from refresh_tokens table"),
+        error: new Error("failed to delete refresh_tokens"),
       };
     }
 

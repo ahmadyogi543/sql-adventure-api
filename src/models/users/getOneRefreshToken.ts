@@ -1,8 +1,13 @@
 import { db } from "@/data/db";
 
-export type RefreshToken = {
-  id: number;
+type RefreshTokenRow = {
   user_id: number;
+  username: string;
+  token: string;
+};
+
+type RefreshToken = {
+  userId: number;
   username: string;
   token: string;
 };
@@ -12,13 +17,21 @@ type GetOneRefreshTokenResult = {
   error: Error | null;
 };
 
-export function getOneRefreshToken(userId: number): GetOneRefreshTokenResult {
+export function getOneRefreshToken(token: string): GetOneRefreshTokenResult {
   try {
-    const stmt = db.prepare("SELECT * FROM refresh_tokens WHERE user_id = ?");
-    const refreshToken = stmt.get(userId) as RefreshToken;
+    const stmt = db.prepare("SELECT * FROM refresh_tokens WHERE token = ?");
+    const refreshToken = stmt.get(token) as RefreshTokenRow | undefined;
+
+    if (!refreshToken) {
+      return { refreshToken: null, error: null };
+    }
 
     return {
-      refreshToken,
+      refreshToken: {
+        userId: refreshToken.user_id,
+        username: refreshToken.username,
+        token: refreshToken.token,
+      },
       error: null,
     };
   } catch (err) {

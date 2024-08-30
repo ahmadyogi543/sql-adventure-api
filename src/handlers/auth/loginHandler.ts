@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+import { addOneRefreshToken } from "@/models/users/addOneRefreshToken";
 import { getOneUserByUsername } from "@/models/users";
 import {
   sendBadRequestJSON,
@@ -45,7 +46,15 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
     username: result.user.username,
   });
 
-  // TODO: store refresh token to persistent storage
+  const { error } = addOneRefreshToken(
+    result.user.id,
+    result.user.username,
+    tokens.refreshToken
+  );
+  if (error) {
+    sendInternalServerErrorJSON(error, res);
+    return;
+  }
 
   sendOKJSON(
     {

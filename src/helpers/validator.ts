@@ -1,24 +1,33 @@
-export function validateIdParam(id: number): [valid: boolean, message: string] {
-  if (Number.isNaN(id)) {
-    return [false, "invalid id format, should be numeric"];
-  }
-  if (id <= 0) {
-    return [false, "invalid id, should be greater than 0"];
+export function validateIdParam(
+  id: string | undefined
+): [number, boolean, string] {
+  if (id === undefined) {
+    return [0, false, "id is missing"];
   }
 
-  return [true, ""];
+  const parsedId = parseInt(id);
+  if (Number.isNaN(parsedId)) {
+    return [0, false, "invalid id format, should be numeric"];
+  }
+  if (parsedId <= 0) {
+    return [0, false, "invalid id, should be greater than 0"];
+  }
+
+  return [parsedId, true, ""];
 }
 
-export function validateJWT(token: string | undefined): [boolean, string] {
+export function validateJWT(
+  token: string | undefined
+): [string, boolean, string] {
   if (token === undefined) {
-    return [false, "token is missing"];
+    return ["", false, "token is missing"];
   }
 
   if (token.trim() === "") {
-    return [false, "token should not be empty"];
+    return ["", false, "token should not be empty"];
   }
 
-  return [true, ""];
+  return [token, true, ""];
 }
 
 export function validateUsernameAndPassword(
