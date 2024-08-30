@@ -10,16 +10,14 @@ import {
 import { validateIdParam } from "@/helpers/validator";
 
 type GetOneUserParams = {
-  id: string;
+  id: string | undefined;
 };
 
 export function getOneUserHandler(
   req: Request<GetOneUserParams, {}, {}>,
   res: Response
 ) {
-  const id = parseInt(req.params.id);
-
-  const [valid, message] = validateIdParam(id);
+  const [id, valid, message] = validateIdParam(req.params.id);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;

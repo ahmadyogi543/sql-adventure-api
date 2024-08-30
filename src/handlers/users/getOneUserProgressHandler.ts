@@ -10,16 +10,14 @@ import {
 import { validateIdParam } from "@/helpers/validator";
 
 type GetOneUserProgressParams = {
-  userId: string;
+  userId: string | undefined;
 };
 
 export function getOneUserProgressHandler(
   req: Request<GetOneUserProgressParams, {}, {}>,
   res: Response
 ) {
-  const userId = parseInt(req.params.userId);
-
-  const [valid, message] = validateIdParam(userId);
+  const [userId, valid, message] = validateIdParam(req.params.userId);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
