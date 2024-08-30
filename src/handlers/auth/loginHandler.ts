@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { addOneRefreshToken } from "@/models/users/addOneRefreshToken";
+import { addOneRefreshToken } from "@/models/users";
 import { getOneUserByUsername } from "@/models/users";
 import {
   sendBadRequestJSON,

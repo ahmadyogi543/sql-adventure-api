@@ -4,3 +4,6 @@ export { getAllUsersProgress } from "./getAllUsersProgress";
 export { getOneUser } from "./getOneUser";
 export { getOneUserByUsername } from "./getOneUserByUsername";
 export { getOneUserProgress } from "./getOneUserProgress";
+export { getOneRefreshToken } from "./getOneRefreshToken";
+export { deleteOneRefreshToken } from "./deleteOneRefreshToken";
+export { addOneRefreshToken } from "./addOneRefreshToken";

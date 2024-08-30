@@ -1,6 +1,7 @@
 import { db } from "@/data/db";
 
 type DeleteOneRefreshTokenResult = {
+  success: boolean;
   error: Error | null;
 };
 
@@ -11,19 +12,22 @@ export function deleteOneRefreshToken(
     const stmt = db.prepare("DELETE FROM refresh_tokens WHERE user_id = ?");
     const result = stmt.run(userId);
 
-    if (result.lastInsertRowid == 0) {
+    if (result.changes == 0) {
       return {
-        error: new Error("failed to delete refresh_tokens"),
+        success: false,
+        error: null,
       };
     }
 
     return {
+      success: true,
       error: null,
     };
   } catch (err) {
     const error = err as Error;
 
     return {
+      success: false,
       error,
     };
   }

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
-import { deleteOneRefreshToken } from "@/models/users/deleteOneRefreshToken";
-import { getOneRefreshToken } from "@/models/users/getOneRefreshToken";
+import { deleteOneRefreshToken, getOneRefreshToken } from "@/models/users";
 import {
   sendBadRequestJSON,
   sendForbiddenJSON,
