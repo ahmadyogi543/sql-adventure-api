@@ -11,13 +11,11 @@ import { validateJWT } from "@/helpers/validator";
 import { verifyJWT } from "@/helpers/verifyJWT";
 
 type Body = {
-  refresh_token: string | undefined;
+  token: string | undefined;
 };
 
 export function refreshHandler(req: Request<{}, {}, Body>, res: Response) {
-  const { refresh_token } = req.body;
-
-  const [token, valid, message] = validateJWT(refresh_token);
+  const [token, valid, message] = validateJWT(req.body.token);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
