@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import { authRouter } from "@/routes/auth";
+import { admin } from "./middlewares/admin";
 import { authenticate } from "@/middlewares/authenticate";
 import { config } from "@/config";
 import { constants } from "@/constants";
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use("/", homeRouter);
 app.use("/auth", authRouter);
 app.use("/stages", authenticate, stagesRouter);
-app.use("/users", authenticate, usersRouter);
+app.use("/users", authenticate, admin, usersRouter);
 
 // for every other routes, send not found
 app.all("/*", notFoundHandler);
