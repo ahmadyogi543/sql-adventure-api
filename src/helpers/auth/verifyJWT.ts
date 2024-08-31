@@ -1,7 +1,7 @@
 import { verify } from "jsonwebtoken";
 
 import { config } from "@/config";
-import { UserPayload } from "@/middlewares/authenticate";
+import { UserPayload } from "@/middlewares/types";
 
 export function verifyJWT(
   token: string,
