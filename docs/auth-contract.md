@@ -43,7 +43,7 @@
 
 - HTTP POST /auth/logout (204 No Content)
 
-headers: `Authorization: Bearer <Base64 JWT Token>`
+header: `Authorization: Bearer <Base64 JWT Token>`
 
 ```jsonc
 // no body

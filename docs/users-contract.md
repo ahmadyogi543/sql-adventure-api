@@ -2,6 +2,8 @@
 
 - HTTP GET /users (200 OK)
 
+header: `Authorization: Bearer <Base64 JWT Token>`
+
 ```jsonc
 {
   "data": {
@@ -23,15 +25,17 @@
 
 - HTTP GET /users/:id (200 OK)
 
+header: `Authorization: Bearer <Base64 JWT Token>`
+
 ```jsonc
 {
   "data": {
     "user": {
       "id": 1,
-      "username": "cristiano",
-      "email": "cristiano@siuu.com",
+      "username": "messi",
+      "email": "messi@ankara.com",
       "password_hash": "$2a$12$DEuGB9gI.R2vAhW1z77ajuQPyyD8Wrs95.MwqMFA4mltgoNupl8y6",
-      "score": 100
+      "role": "admin"
     }
   },
   "message": "retrieved one user successfully",
@@ -47,11 +51,51 @@
     "users_progress": [
       {
         "user_id": 1,
-        "values": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+        "values": [
+          {
+            "stage_id": 1,
+            "no_of_missions": 10,
+            "missions_attempted": [
+              {
+                "attempt": 3,
+                "scores": [20, 30, 60],
+                "last_attempted": "2024-08-31 02:05:02"
+              },
+              {
+                "attempt": 2,
+                "scores": [80, 60],
+                "last_attempted": "2024-08-31 02:05:02"
+              }
+              // ...
+            ],
+            "last_attempted": "2024-08-31 02:05:02"
+          }
+          // ...
+        ]
       },
       {
         "user_id": 2,
-        "values": [100, 100, 50]
+        "values": [
+          {
+            "stage_id": 1,
+            "no_of_missions": 10,
+            "missions_attempted": [
+              {
+                "attempt": 2,
+                "scores": [80, 100],
+                "last_attempted": "2024-08-31 02:05:02"
+              },
+              {
+                "attempt": 1,
+                "scores": [100],
+                "last_attempted": "2024-08-31 02:05:02"
+              }
+              // ...
+            ],
+            "last_attempted": "2024-08-31 02:05:02"
+          }
+          // ...
+        ]
       }
       // ...
     ]
@@ -63,12 +107,34 @@
 
 - HTTP GET /users/progress/:user_id (200 OK)
 
+header: `Authorization: Bearer <Base64 JWT Token>`
+
 ```jsonc
 {
   "data": {
     "user_progress": {
       "user_id": 1,
-      "values": [100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+      "values": [
+        {
+          "stage_id": 1,
+          "no_of_missions": 10,
+          "missions_attempted": [
+            {
+              "attempt": 3,
+              "scores": [20, 30, 60],
+              "last_attempted": "2024-08-31 02:05:02"
+            },
+            {
+              "attempt": 2,
+              "scores": [80, 60],
+              "last_attempted": "2024-08-31 02:05:02"
+            }
+            // ...
+          ],
+          "last_attempted": "2024-08-31 02:05:02"
+        }
+        // ...
+      ]
     }
   },
   "message": "retrieved one user progress successfully",
