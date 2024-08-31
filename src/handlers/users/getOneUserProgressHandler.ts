@@ -24,7 +24,7 @@ export function getOneUserProgressHandler(
   }
 
   if (!userProgress) {
-    sendNotFoundJSON(`cannot find progress for user with id ${id!}`, res);
+    sendNotFoundJSON(`cannot find progress of user with id ${id!}`, res);
     return;
   }
 
