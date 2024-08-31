@@ -13,10 +13,7 @@ type Params = {
   id: string | undefined;
 };
 
-export function getOneStageHandler(
-  req: Request<Params, {}, {}>,
-  res: Response
-) {
+export function getOneStageHandler(req: Request<Params>, res: Response) {
   const [id, valid, message] = validateIdParam(req.params.id);
   if (!valid) {
     sendBadRequestJSON(message, res);
