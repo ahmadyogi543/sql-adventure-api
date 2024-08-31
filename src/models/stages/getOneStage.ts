@@ -1,12 +1,12 @@
 import { db } from "@/data/db";
-import { getStagesJSON } from "@/helpers/jsonify/getStagesJSON";
-import { Stage } from "@/models";
+import { getStagesJSON } from "@/helpers";
+import { StageJSON } from "@/helpers/jsonify/types";
 
-export function getOneStage(id: number): [Stage?, Error?] {
+export function getOneStage(id: number): [StageJSON?, Error?] {
   try {
     const stmt = db.prepare(
       `
-SELECT DISTINCT s.id AS stage_id,
+SELECT s.id AS stage_id,
        s.title AS stage_title,
        s.introduction AS stage_introduction,
        s.closing AS stage_closing,
@@ -15,6 +15,7 @@ SELECT DISTINCT s.id AS stage_id,
        m.title AS mission_title,
        d.type AS dialog_type,
        d.text AS dialog_text,
+       q.id AS queries_id,
        q.type AS queries_type,
        q.text AS queries_text,
        q.validation AS queries_validation

@@ -1,4 +1,20 @@
-// ++ USERS ++
+// ++ ROWS ++
+export type StageRow = {
+  stage_id: number;
+  stage_title: string;
+  stage_introduction: string;
+  stage_closing: string;
+  stage_db_name: string;
+  mission_id: number;
+  mission_title: string;
+  dialog_type: string;
+  dialog_text: string;
+  queries_id?: number;
+  queries_type: string;
+  queries_text: string;
+  queries_validation?: string;
+};
+
 export type UserProgressRow = {
   user_id: number;
   users_progress_id?: number;
@@ -18,36 +34,4 @@ export type User = {
   username: string;
   password_hash: string;
   role: string;
-};
-
-// ++ STAGES ++
-export type Query = {
-  type: string;
-  text: string;
-  validation: string | null;
-};
-
-export type Dialog = {
-  type: string;
-  text: string;
-  query: Query | null;
-};
-
-export type Mission = {
-  title: string;
-  dialogs: Dialog[];
-};
-
-export type Stage = {
-  id: number;
-  title: string;
-  introduction: string;
-  closing: string;
-  db_name: string;
-  missions: Mission[];
-};
-
-export type HeadStage = {
-  id: number;
-  title: string;
 };

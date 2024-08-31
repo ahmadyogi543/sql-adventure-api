@@ -1,5 +1,9 @@
 import { db } from "@/data/db";
-import { HeadStage } from "@/models";
+
+type HeadStage = {
+  id: number;
+  title: string;
+};
 
 export function getAllHeadStages(): [HeadStage[], Error?] {
   try {

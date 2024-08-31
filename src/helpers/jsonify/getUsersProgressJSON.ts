@@ -1,20 +1,20 @@
-import { formatDateToTimestamp } from "../format/formatDateToTimeStamp";
+import { formatDateToTimestamp } from "@/helpers";
 import { UserProgressRow } from "@/models";
 import { UserProgressJSON } from "./types";
 
 export function getUsersProgressJSON(input: any[]) {
-  const result: UserProgressJSON[] = [];
+  const json: UserProgressJSON[] = [];
 
   const rows = input as UserProgressRow[];
   rows.forEach((row) => {
-    let user = result.find((u) => u.user_id === row.user_id);
+    let user = json.find((u) => u.user_id === row.user_id);
 
     if (!user) {
       user = {
         user_id: row.user_id,
         values: [],
       };
-      result.push(user);
+      json.push(user);
     }
 
     if (row.users_progress_id !== undefined) {
@@ -58,5 +58,5 @@ export function getUsersProgressJSON(input: any[]) {
     }
   });
 
-  return result;
+  return json;
 }

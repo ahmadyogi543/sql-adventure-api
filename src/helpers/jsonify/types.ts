@@ -16,3 +16,31 @@ export type UserProgressJSON = {
   user_id: number;
   values: StageUserProgressJSON[];
 };
+
+// ++ STAGES ++
+export type QueryJSON = {
+  type: string;
+  text: string;
+  validation: string | null;
+};
+
+export type DialogJSON = {
+  type: string;
+  text: string;
+  query: QueryJSON | null;
+};
+
+export type MissionJSON = {
+  id: number;
+  title: string;
+  dialogs: DialogJSON[];
+};
+
+export type StageJSON = {
+  id: number;
+  title: string;
+  introduction: string;
+  closing: string;
+  db_name: string;
+  missions: MissionJSON[];
+};
