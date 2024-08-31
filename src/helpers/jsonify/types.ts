@@ -31,7 +31,7 @@ export type DialogJSON = {
 };
 
 export type MissionJSON = {
-  id: number;
+  mission_id: number;
   title: string;
   dialogs: DialogJSON[];
 };

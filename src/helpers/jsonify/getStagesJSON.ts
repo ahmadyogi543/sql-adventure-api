@@ -19,13 +19,13 @@ export function getStagesJSON(input: any[]) {
       json.push(stage);
     }
 
-    // NOTE: I know this is not the good idea
-    // it's should use the id to diffrentiate the mission
-    let mission = stage.missions.find((m) => m.id === row.mission_id);
+    let mission = stage.missions.find(
+      (m) => m.mission_id === row.missions_mission_id
+    );
     if (!mission) {
       mission = {
-        id: row.mission_id,
-        title: row.mission_title,
+        mission_id: row.missions_mission_id,
+        title: row.missions_title,
         dialogs: [],
       };
       stage.missions.push(mission);

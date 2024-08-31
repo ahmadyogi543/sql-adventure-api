@@ -5,8 +5,9 @@ export type StageRow = {
   stage_introduction: string;
   stage_closing: string;
   stage_db_name: string;
-  mission_id: number;
-  mission_title: string;
+  missions_id: number;
+  missions_mission_id: number;
+  missions_title: string;
   dialog_type: string;
   dialog_text: string;
   queries_id?: number;

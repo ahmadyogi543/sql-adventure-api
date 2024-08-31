@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS stages (
 CREATE TABLE IF NOT EXISTS missions (
     id INTEGER PRIMARY KEY,
     stage_id INTEGER NOT NULL,
+    mission_id INTEGER NOT NULL,
     title TEXT NOT NULL,
     FOREIGN KEY (stage_id) REFERENCES stages(id) ON DELETE CASCADE
 );

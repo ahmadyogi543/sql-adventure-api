@@ -12,12 +12,12 @@ VALUES (
   'stage2.db'
 );
 
-INSERT INTO missions (stage_id, title)
+INSERT INTO missions (stage_id, mission_id, title)
 VALUES 
-(1, 'Menampilkan Biaya Kunjungan'),
-(1, 'Mencari Hewan Indah'),
-(2, 'Memusuhi Ambatakam'),
-(2, 'Membantu Rusdi Ngawi');
+(1, 1, 'Menampilkan Biaya Kunjungan'),
+(1, 2, 'Mencari Hewan Indah'),
+(2, 1, 'Memusuhi Ambatakam'),
+(2, 2, 'Membantu Rusdi Ngawi');
 
 INSERT INTO dialogs (mission_id, type, text)
 VALUES
@@ -46,4 +46,4 @@ VALUES
 (3, 'read', 'SELECT * FROM biaya', null),
 (7, 'read', 'SELECT * FROM hewan', null),
 (11, 'write', 'UPDATE FROM hewan SET id = 1 WHERE id = 1', 'SELECT * FROM hewan'),
-(15, 'write', 'DELET FROM hewan WHERE id = 1', 'SELECT * FROM pisang');
+(15, 'write', 'DELETE FROM hewan WHERE id = 1', 'SELECT * FROM pisang');
