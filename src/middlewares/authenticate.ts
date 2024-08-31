@@ -18,12 +18,13 @@ export function authenticate(
   res: Response,
   next: NextFunction
 ) {
+  // for testing, it's tedious to write token all the time
   if (config.TEST_AUTH === "true") {
     req.user = {
-      id: 0,
-      username: "test",
-      iat: 0,
-      exp: 0,
+      id: 1,
+      username: "admin",
+      iat: 980454000,
+      exp: 4411075200,
       role: "admin",
     };
 

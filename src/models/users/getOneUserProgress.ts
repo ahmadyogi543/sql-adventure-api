@@ -18,7 +18,7 @@ FROM users u
 LEFT JOIN progresses p ON u.id = p.user_id
 LEFT JOIN attempted_missions am ON p.id = am.progresses_id
 LEFT JOIN aattempted_mission_scores ams ON am.id = ams.attempted_missions_id
-WHERE u.id = ?
+WHERE u.id = ? AND u.role = 'user'
 ORDER BY u.id, p.id, am.id, ams.id;
 `
     );
