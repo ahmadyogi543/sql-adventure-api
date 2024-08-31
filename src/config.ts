@@ -13,4 +13,6 @@ export const config = {
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY as string,
   HOSTNAME: process.env.HOSTNAME as string,
   PORT: parseInt(process.env.PORT!),
+
+  TEST_AUTH: process.env.TEST_AUTH as "true" | "false",
 };

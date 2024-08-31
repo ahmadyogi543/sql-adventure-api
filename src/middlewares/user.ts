@@ -6,6 +6,7 @@ import {
   validateIdParam,
 } from "@/helpers";
 import { UserPayload } from "./types";
+import { config } from "@/config";
 
 type UserParams = {
   id?: string;
@@ -20,6 +21,13 @@ export function user(req: UserRequest, res: Response, next: NextFunction) {
   const [id, valid, message] = validateIdParam(req.params.id);
   if (!valid) {
     sendBadRequestJSON(message, res);
+    return;
+  }
+
+  if (config.TEST_AUTH === "true") {
+    req.id = id;
+
+    next();
     return;
   }
 
