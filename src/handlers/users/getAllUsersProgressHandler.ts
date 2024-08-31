@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getAllUsersProgress } from "@/models/users";
+import { getAllUsersProgress } from "@/models/users-progress";
 import { sendInternalServerErrorJSON, sendOKJSON } from "@/helpers";
 
 export function getAllUsersProgressHandler(_: Request, res: Response) {

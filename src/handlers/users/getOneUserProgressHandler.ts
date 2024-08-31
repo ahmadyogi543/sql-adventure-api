@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getOneUserProgress } from "@/models/users";
+import { getOneUserProgress } from "@/models/users-progress";
 import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
