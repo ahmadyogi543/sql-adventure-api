@@ -4,7 +4,6 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import { authRouter } from "@/routes/auth";
-import { admin } from "./middlewares/admin";
 import { authenticate } from "@/middlewares/authenticate";
 import { config } from "@/config";
 import { constants } from "@/constants";
