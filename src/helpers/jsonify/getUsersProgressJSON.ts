@@ -1,64 +1,62 @@
-import { UserProgressJSON, MissionUserProgressJSON } from "@/models";
+import { formatDateToTimestamp } from "../format/formatDateToTimeStamp";
+import { UserProgressRow } from "@/models";
+import { UserProgressJSON } from "./types";
 
-type UserProgressRow = {
-  user_id: number;
-  progress_last_attempted?: string;
-  attempted_missions_id?: number;
-  attempted_missions_attempt: number;
-  attempted_missions_last_attempted: string;
-  attempted_mission_scores_id?: number;
-  attempted_mission_scores_score: number;
-};
+export function getUsersProgressJSON(input: any[]) {
+  const result: UserProgressJSON[] = [];
 
-export function getUsersProgressJSON(rows: any[]) {
-  const json: UserProgressJSON[] = [];
-
-  let index = 0;
+  const rows = input as UserProgressRow[];
   rows.forEach((row) => {
-    const {
-      user_id,
-      progress_last_attempted,
-      attempted_mission_scores_id,
-      attempted_missions_attempt,
-      attempted_missions_last_attempted,
-      attempted_missions_id,
-      attempted_mission_scores_score,
-    } = row as UserProgressRow;
+    let user = result.find((u) => u.user_id === row.user_id);
 
-    if (!json[user_id]) {
-      json[user_id] = {
-        user_id: user_id,
+    if (!user) {
+      user = {
+        user_id: row.user_id,
         values: [],
       };
+      result.push(user);
     }
 
-    let value = json[user_id].values.find(
-      (value) => value.stage_id === index + 1
-    );
-    if (!value) {
-      value = {
-        stage_id: index + 1,
-        no_of_missions: 5,
-        last_attempted: progress_last_attempted
-          ? new Date(progress_last_attempted)
-          : null,
-        missions_attempted: [],
-      };
-      json[user_id].values.push(value);
+    if (row.users_progress_id !== undefined) {
+      let progress = user.values.find(
+        (v) => v.stage_id === row.users_progress_stage_id
+      );
+
+      if (!progress) {
+        progress = {
+          stage_id: row.users_progress_stage_id,
+          no_of_missions: row.users_progress_no_of_missions,
+          last_attempted: formatDateToTimestamp(
+            new Date(row.users_progress_last_attempted)
+          ),
+          missions_attempted: [],
+        };
+        user.values.push(progress);
+      }
+
+      if (row.attempted_missions_id !== undefined) {
+        let mission = progress.missions_attempted.find(
+          (m) => m.mission_id === row.attempted_missions_mission_id
+        );
+
+        if (!mission) {
+          mission = {
+            mission_id: row.attempted_missions_mission_id,
+            attempt: row.attempted_missions_attempt,
+            last_attempted: formatDateToTimestamp(
+              new Date(row.attempted_missions_last_attempted)
+            ),
+            scores: [],
+          };
+          progress.missions_attempted.push(mission);
+        }
+
+        if (row.attempted_mission_scores_id !== undefined) {
+          mission.scores.push(row.attempted_mission_scores_score);
+        }
+      }
     }
-
-    if (!attempted_missions_id) return;
-    const upm: MissionUserProgressJSON = {
-      attempted: attempted_missions_attempt,
-      last_attempted: new Date(attempted_missions_last_attempted),
-      scores: [],
-    };
-
-    if (!attempted_mission_scores_id) return;
-    upm.scores.push(attempted_mission_scores_score);
-
-    index++;
   });
 
-  return Object.values(json);
+  return result;
 }

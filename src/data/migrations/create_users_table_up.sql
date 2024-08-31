@@ -6,25 +6,28 @@ CREATE TABLE IF NOT EXISTS users (
     role TEXT NOT NULL CHECK (role IN ('admin', 'user'))
 );
 
--- create progresses table
-CREATE TABLE IF NOT EXISTS progresses (
+-- create users_progress table
+CREATE TABLE IF NOT EXISTS users_progress (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
-  last_attempted TEXT,
+  stage_id INTEGER NOT NULL,
+  no_of_missions INTEGER NOT NULL,
+  last_attempted TEXT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- create attempted_missions
+-- create attempted_missions table
 CREATE TABLE IF NOT EXISTS attempted_missions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  progresses_id INTEGER NOT NULL,
+  users_progress_id INTEGER NOT NULL,
+  mission_id INTEGER NO NULL,
   attempt INTEGER NOT NULL DEFAULT 0,
   last_attempted TEXT NOT NULL,
-  FOREIGN KEY (progresses_id) REFERENCES progresses(id) ON DELETE CASCADE
+  FOREIGN KEY (users_progress_id) REFERENCES users_progress(id) ON DELETE CASCADE
 );
 
 -- create attempted_mission_scores
-CREATE TABLE IF NOT EXISTS aattempted_mission_scores (
+CREATE TABLE IF NOT EXISTS attempted_mission_scores (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   attempted_missions_id INTEGER NOT NULL,
   score INTEGER NOT NULL DEFAULT 0,

@@ -1,20 +1,16 @@
 // ++ USERS ++
-export type MissionUserProgressJSON = {
-  attempted: number;
-  scores: number[];
-  last_attempted: Date;
-};
-
-export type StageUserProgressJSON = {
-  stage_id: number;
-  no_of_missions: number;
-  missions_attempted: MissionUserProgressJSON[];
-  last_attempted: Date | null;
-};
-
-export type UserProgressJSON = {
+export type UserProgressRow = {
   user_id: number;
-  values: StageUserProgressJSON[];
+  users_progress_id?: number;
+  users_progress_stage_id: number;
+  users_progress_no_of_missions: number;
+  users_progress_last_attempted: string;
+  attempted_missions_id?: number;
+  attempted_missions_mission_id: number;
+  attempted_missions_attempt: number;
+  attempted_missions_last_attempted: string;
+  attempted_mission_scores_id?: number;
+  attempted_mission_scores_score: number;
 };
 
 export type User = {
