@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
-import { UserPayload } from "./types";
 import { sendForbiddenJSON, sendInternalServerErrorJSON } from "@/helpers";
+import { UserPayload } from "./types";
 
 interface AdminRequest extends Request {
   user?: UserPayload;
