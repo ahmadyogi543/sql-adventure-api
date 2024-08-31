@@ -1,8 +1,8 @@
 import { db } from "@/data/db";
 import { getUsersProgressJSON } from "@/helpers/jsonify/getUsersProgressJSON";
-import { UserProgress } from "@/models";
+import { UserProgressJSON } from "@/models";
 
-export function getAllUsersProgress(): [UserProgress[], Error?] {
+export function getAllUsersProgress(): [UserProgressJSON[], Error?] {
   try {
     const stmt = db.prepare(
       `

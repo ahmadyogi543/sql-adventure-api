@@ -1,7 +1,20 @@
 // ++ USERS ++
-export type UserProgress = {
+export type MissionUserProgressJSON = {
+  attempted: number;
+  scores: number[];
+  last_attempted: Date;
+};
+
+export type StageUserProgressJSON = {
+  stage_id: number;
+  no_of_missions: number;
+  missions_attempted: MissionUserProgressJSON[];
+  last_attempted: Date | null;
+};
+
+export type UserProgressJSON = {
   user_id: number;
-  values: number[];
+  values: StageUserProgressJSON[];
 };
 
 export type User = {
