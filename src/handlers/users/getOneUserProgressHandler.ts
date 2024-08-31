@@ -2,35 +2,29 @@ import { Response, Request } from "express";
 
 import { getOneUserProgress } from "@/models/users";
 import {
-  sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
-  validateIdParam,
 } from "@/helpers";
 
-type GetOneUserProgressParams = {
-  userId: string | undefined;
-};
+interface GetOneProgressRequest extends Request {
+  id?: number;
+}
 
 export function getOneUserProgressHandler(
-  req: Request<GetOneUserProgressParams, {}, {}>,
+  req: GetOneProgressRequest,
   res: Response
 ) {
-  const [userId, valid, message] = validateIdParam(req.params.userId);
-  if (!valid) {
-    sendBadRequestJSON(message, res);
-    return;
-  }
+  const id = req.id;
 
-  const [userProgress, error] = getOneUserProgress(userId);
+  const [userProgress, error] = getOneUserProgress(id!);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
 
   if (!userProgress) {
-    sendNotFoundJSON(`cannot find progress for user with id ${userId}`, res);
+    sendNotFoundJSON(`cannot find progress for user with id ${id!}`, res);
     return;
   }
 

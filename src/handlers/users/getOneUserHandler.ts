@@ -2,28 +2,19 @@ import { Response, Request } from "express";
 
 import { getOneUser } from "@/models/users";
 import {
-  sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
-  validateIdParam,
 } from "@/helpers";
 
-type GetOneUserParams = {
-  id: string | undefined;
-};
+interface GetOneUserRequest extends Request {
+  id?: number;
+}
 
-export function getOneUserHandler(
-  req: Request<GetOneUserParams, {}, {}>,
-  res: Response
-) {
-  const [id, valid, message] = validateIdParam(req.params.id);
-  if (!valid) {
-    sendBadRequestJSON(message, res);
-    return;
-  }
+export function getOneUserHandler(req: GetOneUserRequest, res: Response) {
+  const id = req.id;
 
-  const [user, error] = getOneUser(id);
+  const [user, error] = getOneUser(id!);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;

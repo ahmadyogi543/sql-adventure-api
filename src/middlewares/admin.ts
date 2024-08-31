@@ -11,15 +11,12 @@ export function admin(req: AdminRequest, res: Response, next: NextFunction) {
   const user = req.user;
 
   if (!user) {
-    sendInternalServerErrorJSON(
-      new Error("failed, user as request is not set"),
-      res
-    );
+    sendInternalServerErrorJSON(new Error("user as request is not set"), res);
     return;
   }
 
   if (user.role !== "admin") {
-    sendForbiddenJSON("this user does not have access", res);
+    sendForbiddenJSON("user is forbidden to access this resource", res);
     return;
   }
 

@@ -31,7 +31,7 @@ app.use(express.json());
 app.use("/", homeRouter);
 app.use("/auth", authRouter);
 app.use("/stages", authenticate, stagesRouter);
-app.use("/users", authenticate, admin, usersRouter);
+app.use("/users", authenticate, usersRouter);
 
 // for every other routes, send not found
 app.all("/*", notFoundHandler);
