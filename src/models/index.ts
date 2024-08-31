@@ -22,12 +22,12 @@ export type UserProgressRow = {
   users_progress_stage_id: number;
   users_progress_no_of_missions: number;
   users_progress_last_attempted: string;
-  attempted_missions_id?: number;
-  attempted_missions_mission_id: number;
-  attempted_missions_attempt: number;
-  attempted_missions_last_attempted: string;
-  attempted_mission_scores_id?: number;
-  attempted_mission_scores_score: number;
+  missions_attempted_id?: number;
+  missions_attempted_mission_id: number;
+  missions_attempted_attempt: number;
+  missions_attempted_last_attempted: string;
+  mission_attempted_scores_id?: number;
+  mission_attempted_scores_score: number;
 };
 
 export type User = {

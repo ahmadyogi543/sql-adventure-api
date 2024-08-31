@@ -12,8 +12,8 @@ VALUES
   (3, 3, 1, 5, '2024-10-31 10:30:00'),
   (4, 3, 2, 5, '2024-10-31 10:30:00');
 
--- mock attempted missions table
-INSERT INTO attempted_missions (id, users_progress_id, mission_id, attempt, last_attempted)
+-- mock missions_attempted table
+INSERT INTO missions_attempted (id, users_progress_id, mission_id, attempt, last_attempted)
 VALUES
   (1, 1, 1, 2, '2024-08-25 10:30:00'),
   (2, 1, 2, 2, '2024-09-25 10:30:00'),
@@ -28,8 +28,8 @@ VALUES
   (8, 4, 2, 1, '2024-02-25 10:30:00'),
   (9, 4, 3, 3, '2024-02-25 10:30:00');
 
--- mock attempted_mission_scores table
-INSERT INTO attempted_mission_scores (id, attempted_missions_id, score)
+-- mock mission_attempted_scores table
+INSERT INTO mission_attempted_scores (id, missions_attempted_id, score)
 VALUES
   (1, 1, 80),
   (2, 1, 100),

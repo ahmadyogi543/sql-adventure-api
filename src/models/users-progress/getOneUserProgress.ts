@@ -13,18 +13,18 @@ SELECT
   up.stage_id as users_progress_stage_id,
   up.no_of_missions as users_progress_no_of_missions,
   up.last_attempted as users_progress_last_attempted,
-  am.id as attempted_missions_id,
-  am.mission_id as attempted_missions_mission_id,
-  am.attempt as attempted_missions_attempt,
-  am.last_attempted as attempted_missions_last_attempted,
-  ams.id as attempted_mission_scores_id,
-  ams.score as attempted_mission_scores_score
+  ma.id as missions_attempted_id,
+  ma.mission_id as missions_attempted_mission_id,
+  ma.attempt as missions_attempted_attempt,
+  ma.last_attempted as missions_attempted_last_attempted,
+  mas.id as mission_attempted_scores_id,
+  mas.score as mission_attempted_scores_score
 FROM users u
 LEFT JOIN users_progress up ON u.id = up.user_id
-LEFT JOIN attempted_missions am ON up.id = am.users_progress_id
-LEFT JOIN attempted_mission_scores ams ON am.id = ams.attempted_missions_id
+LEFT JOIN missions_attempted ma ON up.id = ma.users_progress_id
+LEFT JOIN mission_attempted_scores mas ON ma.id = mas.missions_attempted_id
 WHERE u.role = 'user' AND u.id = ?
-ORDER BY u.id, up.id, am.id, ams.id;
+ORDER BY u.id, up.id, ma.id, mas.id;
 `.trim()
     );
     const [userProgress] = getUsersProgressJSON(stmt.all(id));

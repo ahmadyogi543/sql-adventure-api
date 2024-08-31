@@ -33,24 +33,24 @@ export function getUsersProgressJSON(input: any[]) {
       user.values.push(progress);
     }
 
-    if (!row.attempted_missions_id) return;
+    if (!row.missions_attempted_id) return;
     let mission = progress.missions_attempted.find(
-      (m) => m.mission_id === row.attempted_missions_mission_id
+      (m) => m.mission_id === row.missions_attempted_mission_id
     );
     if (!mission) {
       mission = {
-        mission_id: row.attempted_missions_mission_id,
-        attempt: row.attempted_missions_attempt,
+        mission_id: row.missions_attempted_mission_id,
+        attempt: row.missions_attempted_attempt,
         last_attempted: formatDateToTimestamp(
-          new Date(row.attempted_missions_last_attempted)
+          new Date(row.missions_attempted_last_attempted)
         ),
         scores: [],
       };
       progress.missions_attempted.push(mission);
     }
 
-    if (!row.attempted_mission_scores_id) return;
-    mission.scores.push(row.attempted_mission_scores_score);
+    if (!row.mission_attempted_scores_id) return;
+    mission.scores.push(row.mission_attempted_scores_score);
   });
 
   return json;

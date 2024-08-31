@@ -12,26 +12,26 @@ CREATE TABLE IF NOT EXISTS users_progress (
   user_id INTEGER NOT NULL,
   stage_id INTEGER NOT NULL,
   no_of_missions INTEGER NOT NULL,
-  last_attempted TEXT NOT NULL,
+  last_attempted TEXT,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- create attempted_missions table
-CREATE TABLE IF NOT EXISTS attempted_missions (
+-- create missions_attempted table
+CREATE TABLE IF NOT EXISTS missions_attempted (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   users_progress_id INTEGER NOT NULL,
   mission_id INTEGER NO NULL,
   attempt INTEGER NOT NULL DEFAULT 0,
-  last_attempted TEXT NOT NULL,
+  last_attempted TEXT,
   FOREIGN KEY (users_progress_id) REFERENCES users_progress(id) ON DELETE CASCADE
 );
 
--- create attempted_mission_scores
-CREATE TABLE IF NOT EXISTS attempted_mission_scores (
+-- create mission_attempted_scores
+CREATE TABLE IF NOT EXISTS mission_attempted_scores (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  attempted_missions_id INTEGER NOT NULL,
+  missions_attempted_id INTEGER NOT NULL,
   score INTEGER NOT NULL DEFAULT 0,
-  FOREIGN KEY (attempted_missions_id) REFERENCES attempted_missions(id) ON DELETE CASCADE
+  FOREIGN KEY (missions_attempted_id) REFERENCES missions_attempted(id) ON DELETE CASCADE
 );
 
 -- create banned_tokens table
