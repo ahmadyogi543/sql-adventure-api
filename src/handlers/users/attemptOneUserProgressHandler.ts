@@ -12,17 +12,18 @@ import {
 } from "@/models/users-progress";
 import { getOneUserProgress } from "@/models/users-progress/getOneUserProgress";
 
-type AttemptOneStageBody = {
+type AttemptOneUserProgressStageBody = {
   stage_id?: string;
   no_of_missions?: string;
 };
 
-interface AttemptOneStageRequest extends Request<{}, {}, AttemptOneStageBody> {
+interface AttemptOneUserProgressStageRequest
+  extends Request<{}, {}, AttemptOneUserProgressStageBody> {
   id?: number;
 }
 
-export function attemptOneStageHandler(
-  req: AttemptOneStageRequest,
+export function attemptOneUserProgressHandler(
+  req: AttemptOneUserProgressStageRequest,
   res: Response
 ) {
   const userId = req.id as number;
