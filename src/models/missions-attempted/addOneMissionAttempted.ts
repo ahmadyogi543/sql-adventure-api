@@ -26,7 +26,6 @@ export function addOneMissionAttempted(
     return [true, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [false, error];
   }
 }

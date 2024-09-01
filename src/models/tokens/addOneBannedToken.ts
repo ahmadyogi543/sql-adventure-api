@@ -21,7 +21,6 @@ export function addOneBannedToken(token: string, expiresAt: number): [Error?] {
     return [undefined];
   } catch (err) {
     const error = err as Error;
-
     return [error];
   }
 }

@@ -21,7 +21,6 @@ export function getOneUser(id: number): [User?, Error?] {
     return [user, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [undefined, error];
   }
 }

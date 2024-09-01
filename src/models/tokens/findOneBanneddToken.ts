@@ -10,7 +10,6 @@ export function findOneBannedToken(token: string): [boolean, Error?] {
     return [true, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [false, error];
   }
 }

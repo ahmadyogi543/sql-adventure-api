@@ -11,7 +11,6 @@ export function deleteAllBannedTokens(): [Error?] {
     return [undefined];
   } catch (err) {
     const error = err as Error;
-
     return [error];
   }
 }

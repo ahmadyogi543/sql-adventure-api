@@ -48,7 +48,6 @@ export function getOneMissionAttempted(
     return [missionAttempted, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [undefined, error];
   }
 }

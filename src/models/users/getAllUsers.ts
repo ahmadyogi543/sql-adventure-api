@@ -15,7 +15,6 @@ export function getAllUsers(): [User[], Error?] {
     return [users, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [[], error];
   }
 }
