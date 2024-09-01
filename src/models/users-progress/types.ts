@@ -19,7 +19,7 @@ export type UserProgressJSONRow = {
   users_progress_id?: number;
   users_progress_stage_id: number;
   users_progress_no_of_missions: number;
-  users_progress_last_attempted: string;
+  users_progress_last_attempted: string | null;
   missions_attempted_id?: number;
   missions_attempted_mission_id: number;
   missions_attempted_attempt: number;

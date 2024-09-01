@@ -24,9 +24,9 @@ export function getUsersProgressJSON(rows: UserProgressJSONRow[]) {
       progress = {
         stage_id: row.users_progress_stage_id,
         no_of_missions: row.users_progress_no_of_missions,
-        last_attempted: formatDateToTimestamp(
-          new Date(row.users_progress_last_attempted)
-        ),
+        last_attempted: row.users_progress_last_attempted
+          ? formatDateToTimestamp(new Date(row.users_progress_last_attempted))
+          : null,
         missions_attempted: [],
       };
       user.values.push(progress);

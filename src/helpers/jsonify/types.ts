@@ -10,7 +10,7 @@ type StageUserProgressJSON = {
   stage_id: number;
   no_of_missions: number;
   missions_attempted: MissionUserProgressJSON[];
-  last_attempted: string;
+  last_attempted: string | null;
 };
 
 export type UserProgressJSON = {

@@ -1,4 +1,4 @@
-import { User } from "@/models/types";
+import { User } from "@/models/users/types";
 
 export function getUsersJSON(users: User[]) {
   const json = users.map((user) => ({

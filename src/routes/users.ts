@@ -2,14 +2,13 @@ import { Router } from "express";
 
 import { admin } from "@/middlewares/admin";
 import {
-  addOneUserProgressHandler,
   attemptOneMissionHandler,
+  attemptOneStageHandler,
   deleteOneUserProgressHandler,
   getAllUsersHandler,
   getAllUsersProgressHandler,
   getOneUserHandler,
   getOneUserProgressHandler,
-  updateOneUserProgressHandler,
 } from "@/handlers/users";
 import { user } from "@/middlewares/user";
 
@@ -25,13 +24,10 @@ usersRouter.get("/progress", admin, getAllUsersProgressHandler);
 usersRouter.get("/:id", user, getOneUserHandler);
 
 // add one user progress with id (i.e initializing progress)
-usersRouter.post("/progress/:id", user, addOneUserProgressHandler);
+usersRouter.post("/progress/:id", user, attemptOneStageHandler);
 
 // get one user progress with id
 usersRouter.get("/progress/:id", user, getOneUserProgressHandler);
-
-// update one user progress with id (i.e update the last attempted)
-usersRouter.patch("/progress/:id", user, updateOneUserProgressHandler);
 
 // delete one users progress with id (i.e reset the progress)
 usersRouter.delete("/progress/:id", user, deleteOneUserProgressHandler);

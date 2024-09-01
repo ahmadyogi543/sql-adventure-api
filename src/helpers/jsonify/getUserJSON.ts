@@ -1,4 +1,4 @@
-import { User } from "@/models/types";
+import { User } from "@/models/users/types";
 
 export function getUserJSON(user: User) {
   const json = {

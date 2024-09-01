@@ -5,6 +5,7 @@ import {
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
+  sendNotFoundJSON,
 } from "@/helpers";
 
 interface DeleteOneUserProgressRequest extends Request {
@@ -24,7 +25,10 @@ export function deleteOneUserProgressHandler(
   }
 
   if (!success) {
-    sendBadRequestJSON("failed to delete one user progress", res);
+    sendNotFoundJSON(
+      `progress for user with id ${userId} does not exists`,
+      res
+    );
     return;
   }
 
