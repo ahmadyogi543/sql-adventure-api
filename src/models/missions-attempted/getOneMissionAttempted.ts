@@ -1,20 +1,5 @@
 import { db } from "@/data/db";
-
-type MissionAttemptedRow = {
-  id: number;
-  users_progress_id: number;
-  mission_id: number;
-  attempt: number;
-  last_attempted: string;
-};
-
-export type MissionAttempted = {
-  id: number;
-  usersProgressId: number;
-  missionId: number;
-  attempt: number;
-  lastAttempted: Date;
-};
+import { MissionAttempted, MissionAttemptedRow } from "./types";
 
 export function getOneMissionAttempted(
   userProgressId: number,
@@ -31,10 +16,7 @@ export function getOneMissionAttempted(
       .get(userProgressId, missionId) as MissionAttemptedRow | undefined;
 
     if (!result) {
-      return [
-        undefined,
-        new Error("failed to get data from missions_attempted table"),
-      ];
+      return [undefined, undefined];
     }
 
     const missionAttempted: MissionAttempted = {
