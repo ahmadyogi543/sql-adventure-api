@@ -2,19 +2,20 @@ import { Response, Request } from "express";
 
 import { getOneUser } from "@/models/users";
 import {
+  getUserJSON,
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
 } from "@/helpers";
 
 interface GetOneUserRequest extends Request {
-  id?: number;
+  id: number;
 }
 
 export function getOneUserHandler(req: GetOneUserRequest, res: Response) {
   const id = req.id;
 
-  const [user, error] = getOneUser(id!);
+  const [user, error] = getOneUser(id);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
@@ -25,5 +26,9 @@ export function getOneUserHandler(req: GetOneUserRequest, res: Response) {
     return;
   }
 
-  sendOKJSON({ user: user }, "retrieved one user successfully", res);
+  sendOKJSON(
+    { user: getUserJSON(user) },
+    "retrieved one user successfully",
+    res
+  );
 }

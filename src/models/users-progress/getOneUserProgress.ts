@@ -1,20 +1,5 @@
 import { db } from "@/data/db";
-
-type UserProgressRow = {
-  id: number;
-  user_id: number;
-  stage_id: number;
-  no_of_missions: number;
-  last_attempted: string;
-};
-
-export type UserProgress = {
-  id: number;
-  userId: number;
-  stageId: number;
-  noOfMissions: number;
-  lastAttempted: Date;
-};
+import { UserProgress, UserProgressRow } from "./types";
 
 export function getOneUserProgress(
   userId: number,
@@ -29,9 +14,8 @@ export function getOneUserProgress(
       `.trim()
       )
       .get(userId, stageId) as UserProgressRow | undefined;
-
     if (!result) {
-      return [undefined, new Error("failed to atttempt mission")];
+      return [undefined, undefined];
     }
 
     const userProgress: UserProgress = {
@@ -41,7 +25,6 @@ export function getOneUserProgress(
       noOfMissions: result.no_of_missions,
       lastAttempted: new Date(result.last_attempted),
     };
-
     return [userProgress, undefined];
   } catch (err) {
     const error = err as Error;

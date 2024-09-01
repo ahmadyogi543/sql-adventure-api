@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getOneStage } from "@/models/stages";
+import { getOneStageJSON } from "@/models/stages";
 import {
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
@@ -20,7 +20,7 @@ export function getOneStageHandler(req: Request<Params>, res: Response) {
     return;
   }
 
-  const [stage, error] = getOneStage(id);
+  const [stage, error] = getOneStageJSON(id);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;

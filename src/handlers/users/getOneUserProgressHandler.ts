@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getJSONOneUserProgress } from "@/models/users-progress";
+import { getOneUserProgressJSON } from "@/models/users-progress";
 import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
@@ -8,7 +8,7 @@ import {
 } from "@/helpers";
 
 interface GetOneProgressRequest extends Request {
-  id?: number;
+  id: number;
 }
 
 export function getOneUserProgressHandler(
@@ -17,14 +17,14 @@ export function getOneUserProgressHandler(
 ) {
   const id = req.id;
 
-  const [userProgress, error] = getJSONOneUserProgress(id!);
+  const [userProgress, error] = getOneUserProgressJSON(id);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
 
   if (!userProgress) {
-    sendNotFoundJSON(`cannot find progress of user with id ${id!}`, res);
+    sendNotFoundJSON(`cannot find progress of user with id ${id}`, res);
     return;
   }
 

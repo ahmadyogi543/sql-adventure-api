@@ -15,9 +15,8 @@ export function updateOneUserProgress(
     );
     const now = formatDateToTimestamp(new Date());
     const result = stmt.run(now, userId, stageId);
-
     if (result.changes === 0) {
-      return [false, new Error("failed to update data from users_progress")];
+      return [false, undefined];
     }
 
     return [true, undefined];

@@ -1,10 +1,10 @@
-import { DialogJSON, StageJSON } from "./types";
-import { StageRow } from "@/models";
+import { StageJSON } from "./types";
+import { StageJSONRow } from "@/models/stages/types";
 
-export function getStagesJSON(input: any[]) {
+export function getStagesJSON(input: StageJSONRow[]) {
   const json: StageJSON[] = [];
 
-  const rows = input as StageRow[];
+  const rows = input as StageJSONRow[];
   rows.forEach((row) => {
     let stage = json.find((s) => s.id === row.stage_id);
     if (!stage) {
@@ -31,7 +31,7 @@ export function getStagesJSON(input: any[]) {
       stage.missions.push(mission);
     }
 
-    const dialog: DialogJSON = {
+    const dialog = {
       type: row.dialog_type,
       text: row.dialog_text,
       query: row.queries_id

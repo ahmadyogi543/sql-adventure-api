@@ -1,14 +1,13 @@
 import { db } from "@/data/db";
 import { getUsersProgressJSON } from "@/helpers";
-
 import { UserProgressJSON } from "@/helpers/jsonify/types";
+import { UserProgressJSONRow } from "./types";
 
-export function getJSONOneUserProgress(
-  id: number
-): [UserProgressJSON?, Error?] {
+export function getAllUsersProgressJSON(): [UserProgressJSON[], Error?] {
   try {
-    const stmt = db.prepare(
-      `
+    const result = db
+      .prepare(
+        `
 SELECT
   u.id as user_id,
   up.id as users_progress_id,
@@ -25,16 +24,16 @@ FROM users u
 LEFT JOIN users_progress up ON u.id = up.user_id
 LEFT JOIN missions_attempted ma ON up.id = ma.users_progress_id
 LEFT JOIN mission_attempted_scores mas ON ma.id = mas.missions_attempted_id
-WHERE u.role = 'user' AND u.id = ?
+WHERE u.role = 'user'
 ORDER BY u.id, up.id, ma.id, mas.id;
 `.trim()
-    );
-    const [userProgress] = getUsersProgressJSON(stmt.all(id));
+      )
+      .all() as UserProgressJSONRow[];
+    const usersProgress = getUsersProgressJSON(result);
 
-    return [userProgress, undefined];
+    return [usersProgress, undefined];
   } catch (err) {
     const error = err as Error;
-
-    return [undefined, error];
+    return [[], error];
   }
 }

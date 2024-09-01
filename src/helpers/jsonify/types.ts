@@ -1,11 +1,12 @@
-export type MissionUserProgressJSON = {
+// ++ USER PROGRESS ++
+type MissionUserProgressJSON = {
   mission_id: number;
   attempt: number;
   scores: number[];
   last_attempted: string;
 };
 
-export type StageUserProgressJSON = {
+type StageUserProgressJSON = {
   stage_id: number;
   no_of_missions: number;
   missions_attempted: MissionUserProgressJSON[];
@@ -18,19 +19,19 @@ export type UserProgressJSON = {
 };
 
 // ++ STAGES ++
-export type QueryJSON = {
+type QueryJSON = {
   type: string;
   text: string;
   validation: string | null;
 };
 
-export type DialogJSON = {
+type DialogJSON = {
   type: string;
   text: string;
   query: QueryJSON | null;
 };
 
-export type MissionJSON = {
+type MissionJSON = {
   mission_id: number;
   title: string;
   dialogs: DialogJSON[];

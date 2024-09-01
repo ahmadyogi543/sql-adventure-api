@@ -2,22 +2,19 @@ import { Request, Response } from "express";
 
 import { addOneUser, getOneUserByUsername } from "@/models/users";
 import {
+  getUserJSON,
   sendBadRequestJSON,
   sendCreatedJSON,
   sendInternalServerErrorJSON,
   validateUsernameAndPassword,
 } from "@/helpers";
-import { User } from "@/models";
 
-type RegisterBody = {
+type Body = {
   username: string | undefined;
   password: string | undefined;
 };
 
-export function registerHandler(
-  req: Request<{}, {}, RegisterBody>,
-  res: Response
-) {
+export function registerHandler(req: Request<{}, {}, Body>, res: Response) {
   const [username, password, valid, message] = validateUsernameAndPassword(
     req.body.username,
     req.body.password
@@ -27,15 +24,11 @@ export function registerHandler(
     return;
   }
 
-  let user: User | undefined;
-  let error: Error | undefined;
-
-  [user, error] = getOneUserByUsername(username);
+  let [user, error] = getOneUserByUsername(username);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
-
   if (user) {
     sendBadRequestJSON(
       `the user with username ${username} is already exists`,
@@ -49,14 +42,13 @@ export function registerHandler(
     sendInternalServerErrorJSON(error, res);
     return;
   }
+  if (!user) {
+    sendBadRequestJSON("failed to register a user", res);
+    return;
+  }
 
   sendCreatedJSON(
-    {
-      user: {
-        id: user!.id,
-        username: user!.username,
-      },
-    },
+    { user: getUserJSON(user) },
     `registered user with id ${username} successfully`,
     res
   );

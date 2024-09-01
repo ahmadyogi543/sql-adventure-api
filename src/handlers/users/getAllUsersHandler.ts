@@ -1,7 +1,11 @@
 import { Response, Request } from "express";
 
 import { getAllUsers } from "@/models/users";
-import { sendInternalServerErrorJSON, sendOKJSON } from "@/helpers";
+import {
+  getUsersJSON,
+  sendInternalServerErrorJSON,
+  sendOKJSON,
+} from "@/helpers";
 
 export function getAllUsersHandler(_: Request, res: Response) {
   const [users, error] = getAllUsers();
@@ -10,5 +14,9 @@ export function getAllUsersHandler(_: Request, res: Response) {
     return;
   }
 
-  sendOKJSON({ users: users }, "retrieved all users successfully", res);
+  sendOKJSON(
+    { users: getUsersJSON(users) },
+    "retrieved all users successfully",
+    res
+  );
 }

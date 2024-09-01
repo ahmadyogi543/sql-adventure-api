@@ -1,11 +1,13 @@
 import { db } from "@/data/db";
 import { getStagesJSON } from "@/helpers";
 import { StageJSON } from "@/helpers/jsonify/types";
+import { StageJSONRow } from "./types";
 
-export function getOneStage(id: number): [StageJSON?, Error?] {
+export function getOneStageJSON(id: number): [StageJSON?, Error?] {
   try {
-    const stmt = db.prepare(
-      `
+    const result = db
+      .prepare(
+        `
 SELECT s.id AS stage_id,
        s.title AS stage_title,
        s.introduction AS stage_introduction,
@@ -27,13 +29,13 @@ LEFT JOIN queries q ON d.id = q.dialog_id
 WHERE s.id = ?
 ORDER BY s.id, m.id, d.id, q.id;
     `.trim()
-    );
-    const [stage] = getStagesJSON(stmt.all(id));
+      )
+      .all(id) as StageJSONRow[];
 
+    const [stage] = getStagesJSON(result);
     return [stage, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [undefined, error];
   }
 }

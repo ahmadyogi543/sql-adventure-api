@@ -1,11 +1,10 @@
 import { formatDateToTimestamp } from "@/helpers";
-import { UserProgressRow } from "@/models";
 import { UserProgressJSON } from "./types";
+import { UserProgressJSONRow } from "@/models/users-progress/types";
 
-export function getUsersProgressJSON(input: any[]) {
+export function getUsersProgressJSON(rows: UserProgressJSONRow[]) {
   const json: UserProgressJSON[] = [];
 
-  const rows = input as UserProgressRow[];
   rows.forEach((row) => {
     let user = json.find((u) => u.user_id === row.user_id);
 

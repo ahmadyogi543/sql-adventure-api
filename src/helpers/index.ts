@@ -17,6 +17,8 @@ export {
 } from "./http/responseSender";
 
 export { getStagesJSON } from "./jsonify/getStagesJSON";
+export { getUserJSON } from "./jsonify/getUserJSON";
+export { getUsersJSON } from "./jsonify/getUsersJSON";
 export { getUsersProgressJSON } from "./jsonify/getUsersProgressJSON";
 
 export { validateIdParam } from "./validator/validateIdParam";

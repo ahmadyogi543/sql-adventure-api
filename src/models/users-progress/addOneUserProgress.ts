@@ -13,9 +13,8 @@ export function addOneUserProgress(
     `.trim()
     );
     const result = stmt.run(userId, stageId, noOfMissions);
-
     if (result.changes === 0) {
-      return [false, new Error("failed to add data to users_progress")];
+      return [false, undefined];
     }
 
     return [true, undefined];

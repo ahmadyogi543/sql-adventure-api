@@ -9,7 +9,6 @@ import {
   signJWT,
   validateUsernameAndPassword,
 } from "@/helpers";
-import { User } from "@/models";
 
 type Body = {
   username: string | undefined;
@@ -26,16 +25,13 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
     return;
   }
 
-  let user: User | undefined;
-  let error: Error | undefined;
-
-  [user, error] = getOneUserByUsername(username);
+  const [user, error] = getOneUserByUsername(username);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
 
-  if (!user || !isPasswordMatch(password, user.password_hash)) {
+  if (!user || !isPasswordMatch(password, user.passwordHash)) {
     sendBadRequestJSON(`the username or password is not correct`, res);
     return;
   }
@@ -46,5 +42,5 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
     role: user.role,
   });
 
-  sendOKJSON({ token }, "login successfully", res);
+  sendOKJSON({ token: token }, "login successfully", res);
 }
