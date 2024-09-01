@@ -10,7 +10,7 @@ export function addOneMissionAttemptedScore(
     const result = db
       .prepare(
         `
-        INSERT INTO mission_attempted_scores (mission_attempted_id, score)
+        INSERT INTO mission_attempted_scores (missions_attempted_id, score)
         VALUES (?, ?)
         `.trim()
       )

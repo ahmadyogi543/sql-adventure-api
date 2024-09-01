@@ -54,6 +54,7 @@ export function addOneUserProgressHandler(req: Request, res: Response) {
       `user progress for stage with id ${stageId} is already exists`,
       res
     );
+    return;
   }
 
   [success, error] = addOneUserProgress(userId, stageId, noOfMissions);
