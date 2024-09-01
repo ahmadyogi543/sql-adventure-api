@@ -1,38 +1,50 @@
 import { db } from "@/data/db";
-import { getUsersProgressJSON } from "@/helpers";
 
-import { UserProgressJSON } from "@/helpers/jsonify/types";
+type UserProgressRow = {
+  id: number;
+  user_id: number;
+  stage_id: number;
+  no_of_missions: number;
+  last_attempted: string;
+};
 
-export function getOneUserProgress(id: number): [UserProgressJSON?, Error?] {
+export type UserProgress = {
+  id: number;
+  userId: number;
+  stageId: number;
+  noOfMissions: number;
+  lastAttempted: Date;
+};
+
+export function getOneUserProgress(
+  userId: number,
+  stageId: number
+): [UserProgress?, Error?] {
   try {
-    const stmt = db.prepare(
-      `
-SELECT
-  u.id as user_id,
-  up.id as users_progress_id,
-  up.stage_id as users_progress_stage_id,
-  up.no_of_missions as users_progress_no_of_missions,
-  up.last_attempted as users_progress_last_attempted,
-  ma.id as missions_attempted_id,
-  ma.mission_id as missions_attempted_mission_id,
-  ma.attempt as missions_attempted_attempt,
-  ma.last_attempted as missions_attempted_last_attempted,
-  mas.id as mission_attempted_scores_id,
-  mas.score as mission_attempted_scores_score
-FROM users u
-LEFT JOIN users_progress up ON u.id = up.user_id
-LEFT JOIN missions_attempted ma ON up.id = ma.users_progress_id
-LEFT JOIN mission_attempted_scores mas ON ma.id = mas.missions_attempted_id
-WHERE u.role = 'user' AND u.id = ?
-ORDER BY u.id, up.id, ma.id, mas.id;
-`.trim()
-    );
-    const [userProgress] = getUsersProgressJSON(stmt.all(id));
+    const result = db
+      .prepare(
+        `
+      SELECT id FROM users_progress
+      WHERE user_id = ? AND stage_id = ?
+      `.trim()
+      )
+      .get(userId, stageId) as UserProgressRow | undefined;
+
+    if (!result) {
+      return [undefined, new Error("failed to atttempt mission")];
+    }
+
+    const userProgress: UserProgress = {
+      id: result.id,
+      userId: result.user_id,
+      stageId: result.stage_id,
+      noOfMissions: result.no_of_missions,
+      lastAttempted: new Date(result.last_attempted),
+    };
 
     return [userProgress, undefined];
   } catch (err) {
     const error = err as Error;
-
     return [undefined, error];
   }
 }

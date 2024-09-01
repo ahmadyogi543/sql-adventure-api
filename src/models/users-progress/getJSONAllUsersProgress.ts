@@ -2,7 +2,7 @@ import { db } from "@/data/db";
 import { getUsersProgressJSON } from "@/helpers";
 import { UserProgressJSON } from "@/helpers/jsonify/types";
 
-export function getAllUsersProgress(): [UserProgressJSON[], Error?] {
+export function getJSONAllUsersProgress(): [UserProgressJSON[], Error?] {
   try {
     const stmt = db.prepare(
       `

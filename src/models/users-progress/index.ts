@@ -1,5 +1,5 @@
 export { addOneUserProgress } from "./addOneUserProgress";
 export { deleteOneUserProgress } from "./deleteOneUserProgress";
-export { getAllUsersProgress } from "./getAllUsersProgress";
-export { getOneUserProgress } from "./getOneUserProgress";
+export { getJSONAllUsersProgress } from "./getJSONAllUsersProgress";
+export { getJSONOneUserProgress } from "./getJSONOneUserProgress";
 export { updateOneUserProgress } from "./updateOneUserProgress";

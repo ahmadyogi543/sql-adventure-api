@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import { getOneUserProgress } from "@/models/users-progress";
+import { getJSONOneUserProgress } from "@/models/users-progress";
 import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
@@ -17,7 +17,7 @@ export function getOneUserProgressHandler(
 ) {
   const id = req.id;
 
-  const [userProgress, error] = getOneUserProgress(id!);
+  const [userProgress, error] = getJSONOneUserProgress(id!);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
