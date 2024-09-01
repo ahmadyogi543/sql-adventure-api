@@ -8,14 +8,14 @@ import {
 } from "@/helpers";
 
 interface GetOneProgressRequest extends Request {
-  id: number;
+  id?: number;
 }
 
 export function getOneUserProgressHandler(
   req: GetOneProgressRequest,
   res: Response
 ) {
-  const id = req.id;
+  const id = req.id as number;
 
   const [userProgress, error] = getOneUserProgressJSON(id);
   if (error) {

@@ -9,11 +9,11 @@ import {
 } from "@/helpers";
 
 interface GetOneUserRequest extends Request {
-  id: number;
+  id?: number;
 }
 
 export function getOneUserHandler(req: GetOneUserRequest, res: Response) {
-  const id = req.id;
+  const id = req.id as number;
 
   const [user, error] = getOneUser(id);
   if (error) {
