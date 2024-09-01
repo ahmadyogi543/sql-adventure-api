@@ -1,51 +1,57 @@
 # SQL Adventure API Contract (AUTH)
 
-- HTTP POST /auth/register (201 Created)
+This is the contract for AUTH route for SQL Adventure API
+
+## HTTP POST /auth/register (201 Created)
+
+Register a user with username and password
+
+body:
+
+- username: string
+- password: string
+
+success response:
 
 ```jsonc
-// body
 {
-  "id": 1,
-  "username": "ahmadyogi"
-}
-
-// response
-{
-    "status": "success",
-    "message": "registered user with id ahmadyogi successfully",
-    "data": {
-        "user": {
-            "id": 1,
-            "username": "ahmadyogi"
-        }
+  "status": "success",
+  "message": "registered user with id cristiano successfully",
+  "data": {
+    "user": {
+      "id": 3,
+      "username": "cristiano",
+      "role": "user"
     }
+  }
 }
 ```
 
-- HTTP POST /auth/login (200 OK)
+## HTTP POST /auth/login (200 OK)
+
+Logged the user in with username and password
+
+body:
+
+- username: string
+- password: string
+
+success response:
 
 ```jsonc
-// body
 {
-  "id": 1,
-  "username": "ahmadyogi"
-}
-
-// response
-{
-    "status": "success",
-    "message": "login successfully",
-    "data": {
-        "token": "<base64 jwt token>"
-    }
+  "status": "success",
+  "message": "login successfully",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJjcmlzdGlhbm8iLCJyb2xlIjoidXNlciIsImlhdCI6MTcyNTE5NDQ1OSwiZXhwIjoxNzI1MTk4MDU5fQ.Ev7aT9pgIo0E5EDz-_csWoxrxEhmxO6JJkk6A51kOk0"
+  }
 }
 ```
 
-- HTTP POST /auth/logout (204 No Content)
+## HTTP DELETE /auth/logout (204 No Content)
 
-header: `Authorization: Bearer <Base64 JWT Token>`
+Logged the user out
 
-```jsonc
-// no body
+headers:
 
-```
+- Authorization: Bearer `<Base64 JWT Token>`

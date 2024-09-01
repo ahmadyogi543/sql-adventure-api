@@ -1,141 +1,161 @@
 # SQL Adventure API Contract (STAGES)
 
-- HTTP GET /stages (200 OK)
+This is the contract for STAGES route for SQL Adventure API
+
+## HTTP GET /stages (200 OK)
+
+Retrieve all stages
+
+headers:
+
+- Authorization: Bearer `<Base64 JWT Token>`
+
+on success response:
 
 ```jsonc
 {
+  "status": "success",
+  "message": "retrieved all stages successfully",
   "data": {
     "stages": [
       {
         "id": 1,
-        "title": "Menjelajah Pulau Kembang",
-        "introduction": "Selamat datang di Pulau Kembang! Kamu...",
-        "closing": "Selamat! Kamu telah menyelesaikan semua misi...",
-        "db_name": "stage1.db",
+        "title": "Judul Tingkatan",
+        "introduction": "Berisikan pengenalan cerita",
+        "closing": "Berisikan kata penutup cerita",
+        "db_name": "contoh.db",
         "missions": [
           {
-            "title": "Menampilkan Biaya Kunjungan",
+            "mission_id": 1,
+            "title": "Judul Misi",
             "dialogs": [
               {
-                "type": "NARRATION",
-                "text": "Mengetahui biaya kunjungan sangat penting..."
+                "type": "narration",
+                "text": "Berisikan narasi cerita",
+                "query": null
               },
               {
-                "type": "INSTRUCTION",
-                "text": "Ketikan query untuk menampilkan...",
-                "sql": {
-                  "type": "READ",
-                  "query": "SELECT * FROM biaya",
+                "type": "instruction",
+                "text": "Berisikan perintah menulis",
+                "query": {
+                  "type": "read",
+                  "text": "SELECT * FROM nothing",
                   "validation": null
                 }
+              },
+              {
+                "type": "instruction",
+                "text": "Berisikan perintah menulis",
+                "query": {
+                  "type": "write",
+                  "text": "DELETE FROM nothing WHERE everything = 'possible'",
+                  "validation": "SELECT * FROM nothing WHERE everything = 'possible'"
+                }
+              },
+              {
+                "type": "narration",
+                "text": "Berisikan narasi cerita",
+                "query": null
               }
-              // ...
             ]
           }
-          // ...
+          // more...
         ]
       }
+      // more...
     ]
-  },
-  "message": "retrieved all stages successfully",
-  "status": "success"
+  }
 }
 ```
 
-- HTTP GET /stages/:id (200 OK)
+## HTTP GET /stages/:id (200 OK)
+
+Retrieve one stage
+
+headers:
+
+- Authorization: Bearer `<Base64 JWT Token>`
+
+on success response:
 
 ```jsonc
 {
+  "status": "success",
+  "message": "retrieved one stage successfully",
   "data": {
     "stage": {
       "id": 1,
-      "title": "Menjelajah Pulau Kembang",
-      "introduction": "Selamat datang di Pulau Kembang! Kamu...",
-      "closing": "Selamat! Kamu telah menyelesaikan semua misi...",
-      "db_name": "stage1.db",
+      "title": "Judul Tingkatan",
+      "introduction": "Berisikan pengenalan cerita",
+      "closing": "Berisikan kata penutup cerita",
+      "db_name": "contoh.db",
       "missions": [
         {
-          "title": "Menampilkan Biaya Kunjungan",
+          "mission_id": 1,
+          "title": "Judul Misi",
           "dialogs": [
             {
-              "type": "NARRATION",
-              "text": "Mengetahui biaya kunjungan sangat penting..."
+              "type": "narration",
+              "text": "Berisikan narasi cerita",
+              "query": null
             },
             {
-              "type": "INSTRUCTION",
-              "text": "Ketikan query untuk menampilkan...",
-              "sql": {
-                "type": "READ",
-                "query": "SELECT * FROM biaya",
+              "type": "instruction",
+              "text": "Berisikan perintah menulis",
+              "query": {
+                "type": "read",
+                "text": "SELECT * FROM nothing",
                 "validation": null
               }
+            },
+            {
+              "type": "instruction",
+              "text": "Berisikan perintah menulis",
+              "query": {
+                "type": "write",
+                "text": "DELETE FROM nothing WHERE everything = 'possible'",
+                "validation": "SELECT * FROM nothing WHERE everything = 'possible'"
+              }
+            },
+            {
+              "type": "narration",
+              "text": "Berisikan narasi cerita",
+              "query": null
             }
-            // ...
           ]
         }
-        // ...
+        // more...
       ]
     }
-  },
-  "message": "retrieved one stage successfully",
-  "status": "success"
+  }
 }
 ```
 
-- HTTP GET /stages/head (200 OK)
+## HTTP GET /stages/head (200 OK)
+
+Retrieve all the head of stages (id and title)
+
+headers:
+
+- Authorization: Bearer `<Base64 JWT Token>`
+
+on success response:
 
 ```jsonc
 {
+  "status": "success",
+  "message": "retrieved all head stages successfully",
   "data": {
     "head_stages": [
       {
         "id": 1,
-        "title": "Menjelajah Pulau Kembang"
+        "title": "Judul Tingkatan"
+      },
+      {
+        "id": 2,
+        "title": "Judul Tingkatan"
       }
-      // ...
     ]
-  },
-  "message": "retrieved all head stages successfully",
-  "status": "success"
+  }
 }
-```
-
-- DATA DEFINITION
-
-```sql
--- create stages table
-CREATE TABLE IF NOT EXISTS stages (
-    id INTEGER PRIMARY KEY,
-    title TEXT NOT NULL,
-    introduction TEXT NOT NULL,
-    closing TEXT NOT NULL,
-    db_name TEXT
-);
-
--- create missions table
-CREATE TABLE IF NOT EXISTS missions (
-    id INTEGER PRIMARY KEY,
-    stage_id INTEGER NOT NULL,
-    title TEXT NOT NULL,
-    FOREIGN KEY (stage_id) REFERENCES stages(id) ON DELETE CASCADE
-);
-
--- create dialogs table
-CREATE TABLE IF NOT EXISTS dialogs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    mission_id INTEGER NOT NULL,
-    type TEXT NOT NULL CHECK (type IN ('narration', 'instruction')),
-    text TEXT NOT NULL,
-    FOREIGN KEY (mission_id) REFERENCES missions(id) ON DELETE CASCADE
-);
-
--- create queries table
-CREATE TABLE IF NOT EXISTS queries (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    dialog_id INTEGER NOT NULL,
-    type TEXT NOT NULL CHECK (type IN ('read', 'write')),
-    text TEXT NOT NULL,
-    validation TEXT,
-    FOREIGN KEY (dialog_id) REFERENCES dialogs(id) ON DELETE CASCADE
-)
 ```
