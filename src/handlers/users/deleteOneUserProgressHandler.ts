@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 
 import { deleteOneUserProgress } from "@/models/users-progress";
 import {
-  sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
   sendNotFoundJSON,
