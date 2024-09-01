@@ -8,7 +8,7 @@ export const authRouter = Router();
 authRouter.post("/login", loginHandler);
 
 // log the user out
-authRouter.post("/logout", logoutHandler);
+authRouter.delete("/logout", logoutHandler);
 
 // register the user
 authRouter.post("/register", registerHandler);
