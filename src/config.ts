@@ -2,11 +2,13 @@ import dotenv from "dotenv";
 
 import { constants } from "@/constants";
 
-const { ENV_LOCAL, ENV_PROD } = constants;
+const { ENV_LOCAL } = constants;
 
-dotenv.config({
-  path: process.env.NODE_ENV !== "production" ? ENV_LOCAL : ENV_PROD,
-});
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config({
+    path: ENV_LOCAL,
+  });
+}
 
 export const config = {
   DB_PATH: `./src/data/bin/${process.env.DB_NAME}`,
