@@ -3,9 +3,9 @@ import { User, UserRow } from "./types";
 
 export function getOneUser(id: number): [User?, Error?] {
   try {
-    const result = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
-      | UserRow
-      | undefined;
+    const result = db
+      .prepare("SELECT * FROM users WHERE id = ? AND role = 'user'")
+      .get(id) as UserRow | undefined;
 
     if (!result) {
       return [undefined, undefined];

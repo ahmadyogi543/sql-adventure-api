@@ -3,7 +3,9 @@ import { User, UserRow } from "./types";
 
 export function getAllUsers(): [User[], Error?] {
   try {
-    const results = db.prepare("SELECT * FROM users").all() as UserRow[];
+    const results = db
+      .prepare("SELECT * FROM users WHERE role = 'user'")
+      .all() as UserRow[];
 
     const users: User[] = results.map((result) => ({
       id: result.id,
