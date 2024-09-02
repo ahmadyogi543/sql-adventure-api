@@ -27,10 +27,12 @@ app.use(morgan("custom"));
 app.use(express.json());
 
 // routes
-app.use("/", homeRouter);
-app.use("/auth", authRouter);
-app.use("/stages", authenticate, stagesRouter);
-app.use("/users", authenticate, usersRouter);
+const router = express.Router();
+router.use("/", homeRouter);
+router.use("/auth", authRouter);
+router.use("/stages", authenticate, stagesRouter);
+router.use("/users", authenticate, usersRouter);
+app.use("/api", router);
 
 // for every other routes, send not found
 app.all("/*", notFoundHandler);
