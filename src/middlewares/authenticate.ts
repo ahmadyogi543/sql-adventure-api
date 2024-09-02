@@ -19,7 +19,7 @@ export function authenticate(
   next: NextFunction
 ) {
   // for testing, it's tedious to write token all the time
-  if (config.TEST_AUTH === "true") {
+  if (config.PASS_AUTH === "true") {
     req.user = {
       id: 1,
       username: "admin",

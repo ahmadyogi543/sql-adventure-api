@@ -24,7 +24,7 @@ export function user(req: UserRequest, res: Response, next: NextFunction) {
     return;
   }
 
-  if (config.TEST_AUTH === "true") {
+  if (config.PASS_AUTH === "true") {
     // for testing, it's tedious to write token all the time
     req.id = id;
 

@@ -1,5 +1,6 @@
 export const constants = {
   ENV_LOCAL: ".env.local",
+  ENV_PROD: ".env.prod",
   DB_NAMES: ["local.db", "prod.db"],
   DB_PATH_LOCAL: "./src/data/bin",
   DB_PATH_PROD: "./dist/data/bin",
