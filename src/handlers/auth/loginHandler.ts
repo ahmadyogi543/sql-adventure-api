@@ -40,6 +40,7 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
     id: user.id,
     name: user.name,
     email: user.email,
+    institution: user.institution,
     role: user.role,
   });
 
