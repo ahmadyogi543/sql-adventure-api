@@ -16,7 +16,7 @@ export function addOneUser(
     const result = db
       .prepare(
         `
-      INSERT INTO users (name, email, institution, password_hash, role) VALUES (?, ?, ?);
+      INSERT INTO users (name, email, institution, password_hash, role) VALUES (?, ?, ?, ?, ?);
     `.trim()
       )
       .run(name, email, institution, password_hash, role);

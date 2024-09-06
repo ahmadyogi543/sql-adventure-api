@@ -1,7 +1,7 @@
 -- mock users table
-INSERT INTO users (id, email, username, institusi, password_hash, role) VALUES
-(2, 'ahmady@sql-adventure.research.web.id', 'ahmady', 'Universitas Lambung Mangkurat', '$2a$12$wpw4m0f6G3oz8ZuyAkgLT.cYj8C8T601PUlo1taeLY5VKLn9dHVQK', 'user'),
-(3, 'muthsb@sql-adventure.research.web.id', 'muthsb', 'Universitas Lambung Mangkurat', '$2a$12$wpw4m0f6G3oz8ZuyAkgLT.cYj8C8T601PUlo1taeLY5VKLn9dHVQK', 'user');
+INSERT INTO users (id, name, email, institution, password_hash, role) VALUES
+(2, 'Ahmad Yogi', 'ahmady@sql-adventure.research.web.id', 'Universitas Lambung Mangkurat', '$2a$12$wpw4m0f6G3oz8ZuyAkgLT.cYj8C8T601PUlo1taeLY5VKLn9dHVQK', 'user'),
+(3, 'Mutiara Arasti Hasibuan', 'muthsb@sql-adventure.research.web.id', 'Universitas Lambung Mangkurat', '$2a$12$wpw4m0f6G3oz8ZuyAkgLT.cYj8C8T601PUlo1taeLY5VKLn9dHVQK', 'user');
 
 -- mock users_progress table
 INSERT INTO users_progress (id, user_id, stage_id, no_of_missions, last_attempted)

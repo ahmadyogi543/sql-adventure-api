@@ -17,7 +17,7 @@ export function validateLoginBody(
 
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!regex.test(email)) {
-    ["", "", false, "email is not in valid format"];
+    return ["", "", false, "email is not in valid format"];
   }
 
   if (password.length < 8) {
