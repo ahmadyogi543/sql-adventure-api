@@ -23,4 +23,5 @@ export { getUsersProgressJSON } from "./jsonify/getUsersProgressJSON";
 
 export { validateNumberParam } from "./validator/validateNumberParam";
 export { validateJWT } from "./validator/validateJWT";
-export { validateUsernameAndPassword } from "./validator/validateUsernameAndPassword";
+export { validateLoginBody } from "./validator/validateLoginBody";
+export { validateRegisterBody } from "./validator/validateRegisterBody";

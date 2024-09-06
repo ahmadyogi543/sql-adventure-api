@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
 
-import { getOneUserByUsername } from "@/models/users";
+import { getOneUserByEmail } from "@/models/users";
 import {
   isPasswordMatch,
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendOKJSON,
   signJWT,
-  validateUsernameAndPassword,
+  validateLoginBody,
 } from "@/helpers";
 
 type Body = {
-  username: string | undefined;
+  email: string | undefined;
   password: string | undefined;
 };
 
 export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
-  const [username, password, valid, message] = validateUsernameAndPassword(
-    req.body.username,
+  const [email, password, valid, message] = validateLoginBody(
+    req.body.email,
     req.body.password
   );
   if (!valid) {
@@ -25,7 +25,7 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
     return;
   }
 
-  const [user, error] = getOneUserByUsername(username);
+  const [user, error] = getOneUserByEmail(email);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
@@ -38,7 +38,7 @@ export function loginHandler(req: Request<{}, {}, Body>, res: Response) {
 
   const token = signJWT({
     id: user.id,
-    username: user.username,
+    email: user.email,
     role: user.role,
   });
 

@@ -9,7 +9,9 @@ export function getAllUsers(): [User[], Error?] {
 
     const users: User[] = results.map((result) => ({
       id: result.id,
-      username: result.username,
+      name: result.name,
+      email: result.email,
+      institution: result.institution,
       passwordHash: result.password_hash,
       role: result.role,
     }));

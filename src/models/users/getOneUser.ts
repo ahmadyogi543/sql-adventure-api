@@ -13,7 +13,9 @@ export function getOneUser(id: number): [User?, Error?] {
 
     const user: User = {
       id: result.id,
-      username: result.username,
+      name: result.name,
+      email: result.email,
+      institution: result.institution,
       passwordHash: result.password_hash,
       role: result.role,
     };

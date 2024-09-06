@@ -5,7 +5,9 @@ import { getOneUser } from "./getOneUser";
 import { User } from "./types";
 
 export function addOneUser(
-  username: string,
+  name: string,
+  email: string,
+  institution: string,
   password: string,
   role: string = "user"
 ): [User?, Error?] {
@@ -14,10 +16,10 @@ export function addOneUser(
     const result = db
       .prepare(
         `
-      INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?);
+      INSERT INTO users (name, email, institution, password_hash, role) VALUES (?, ?, ?);
     `.trim()
       )
-      .run(username, password_hash, role);
+      .run(name, email, institution, password_hash, role);
 
     if (result.changes === 0) {
       return [undefined, undefined];

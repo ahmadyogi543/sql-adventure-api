@@ -1,43 +1,45 @@
 import { Request, Response } from "express";
 
-import { addOneUser, getOneUserByUsername } from "@/models/users";
+import { addOneUser, getOneUserByEmail } from "@/models/users";
 import {
   getUserJSON,
   sendBadRequestJSON,
   sendCreatedJSON,
   sendInternalServerErrorJSON,
-  validateUsernameAndPassword,
+  validateRegisterBody,
 } from "@/helpers";
 
 type Body = {
-  username: string | undefined;
+  name: string | undefined;
+  email: string | undefined;
+  institution: string | undefined;
   password: string | undefined;
 };
 
 export function registerHandler(req: Request<{}, {}, Body>, res: Response) {
-  const [username, password, valid, message] = validateUsernameAndPassword(
-    req.body.username,
-    req.body.password
-  );
+  const [name, email, institution, password, valid, message] =
+    validateRegisterBody(
+      req.body.name,
+      req.body.email,
+      req.body.institution,
+      req.body.password
+    );
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;
   }
 
-  let [user, error] = getOneUserByUsername(username);
+  let [user, error] = getOneUserByEmail(email);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
   if (user) {
-    sendBadRequestJSON(
-      `the user with username ${username} is already exists`,
-      res
-    );
+    sendBadRequestJSON(`the user with email ${email} is already exists`, res);
     return;
   }
 
-  [user, error] = addOneUser(username, password);
+  [user, error] = addOneUser(name, email, institution, password);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
@@ -49,7 +51,7 @@ export function registerHandler(req: Request<{}, {}, Body>, res: Response) {
 
   sendCreatedJSON(
     { user: getUserJSON(user) },
-    `registered user with id ${username} successfully`,
+    `registered user with id ${user.id} successfully`,
     res
   );
 }

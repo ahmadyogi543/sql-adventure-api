@@ -1,7 +1,9 @@
 -- create users table
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL UNIQUE,
     username TEXT NOT NULL UNIQUE,
+    institusi TEXT NOT NULL,
     password_hash TEXT NOT NULL,
     role TEXT NOT NULL CHECK (role IN ('admin', 'user'))
 );
@@ -44,5 +46,5 @@ CREATE TABLE IF NOT EXISTS banned_tokens (
 -- one account to rule them all (i.e admin)
 -- username: admin
 -- password: 12345678
-INSERT OR IGNORE INTO users (id, username, password_hash, role)
-VALUES(1, 'admin', '$2a$12$LjDaqRkKlRRWWXzsGZJxFOmcdufcy8CB4fsevG9Hkb6zatDT0RyeK', 'admin');
+INSERT OR IGNORE INTO users (id, email, username, institusi, password_hash, role)
+VALUES(1, 'admin@sql-adventure.research-media.web.id', 'admin', 'Universitas Lambung Mangkurat', '$2a$12$LjDaqRkKlRRWWXzsGZJxFOmcdufcy8CB4fsevG9Hkb6zatDT0RyeK', 'admin');

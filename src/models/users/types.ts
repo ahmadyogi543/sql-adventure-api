@@ -1,13 +1,17 @@
 export type UserRow = {
   id: number;
-  username: string;
+  name: string;
+  email: string;
+  institution: string;
   password_hash: string;
   role: string;
 };
 
 export type User = {
   id: number;
-  username: string;
+  name: string;
+  email: string;
+  institution: string;
   passwordHash: string;
   role: string;
 };
