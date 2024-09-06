@@ -22,6 +22,7 @@ export function authenticate(
   if (config.PASS_AUTH === "true") {
     req.user = {
       id: 1,
+      name: "Admin",
       email: "admin@sql-adventure.research-media.web.id",
       iat: 980454000,
       exp: 4411075200,
