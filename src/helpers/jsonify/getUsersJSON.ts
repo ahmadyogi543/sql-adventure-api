@@ -6,7 +6,6 @@ export function getUsersJSON(users: User[]) {
     name: user.name,
     email: user.email,
     institution: user.institution,
-    done: false, // TODO: calculate it from progress
     role: user.role,
   }));
 
