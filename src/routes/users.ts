@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   addOneUserProgressHandler,
   attemptOneMissionHandler,
+  attemptOneStageHandler,
   deleteOneUserHandler,
   deleteOneUserProgressHandler,
   getAllUsersHandler,
@@ -42,7 +43,14 @@ usersRouter.put("/progress/:id", user, updateOneUserProgressHandler);
 usersRouter.delete("/progress/:id", user, deleteOneUserProgressHandler);
 
 // attempt one mission on user progress with id (i.e put attempted mission data)
-usersRouter.post("/progress/:id/attempt", user, attemptOneMissionHandler);
+usersRouter.post(
+  "/progress/:id/missions/attempt",
+  user,
+  attemptOneMissionHandler
+);
+
+// attempt one stage on user progress with id
+usersRouter.post("/progress/:id/stages/attempt", user, attemptOneStageHandler);
 
 // get stage data (progress)
 usersRouter.get("/stages/:id", user, getStageDataJSONHandler);

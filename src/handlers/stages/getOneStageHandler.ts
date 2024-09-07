@@ -6,7 +6,7 @@ import {
   sendInternalServerErrorJSON,
   sendNotFoundJSON,
   sendOKJSON,
-  validateNumberParam,
+  validateIDParam,
 } from "@/helpers";
 
 type Params = {
@@ -14,7 +14,7 @@ type Params = {
 };
 
 export function getOneStageHandler(req: Request<Params>, res: Response) {
-  const [id, valid, message] = validateNumberParam(req.params.id);
+  const [id, valid, message] = validateIDParam(req.params.id);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;

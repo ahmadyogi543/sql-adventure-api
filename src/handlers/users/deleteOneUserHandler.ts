@@ -2,13 +2,11 @@ import { Response, Request } from "express";
 
 import { deleteOneUser, getOneUser } from "@/models/users";
 import {
-  getUserJSON,
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
   sendNotFoundJSON,
-  sendOKJSON,
-  validateNumberParam,
+  validateIDParam,
 } from "@/helpers";
 import { User } from "@/models/users/types";
 
@@ -20,7 +18,7 @@ export function deleteOneUserHandler(
   req: Request<Params, {}, {}>,
   res: Response
 ) {
-  const [id, valid, message] = validateNumberParam(req.params.id);
+  const [id, valid, message] = validateIDParam(req.params.id);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;

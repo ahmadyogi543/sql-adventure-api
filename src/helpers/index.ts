@@ -21,7 +21,7 @@ export { getUserJSON } from "./jsonify/getUserJSON";
 export { getUsersJSON } from "./jsonify/getUsersJSON";
 export { getUsersProgressJSON } from "./jsonify/getUsersProgressJSON";
 
-export { validateNumberParam } from "./validator/validateNumberParam";
+export { validateIDParam, validateNumber } from "./validator/validateNumbers";
 export { validateJWT } from "./validator/validateJWT";
 export { validateLoginBody } from "./validator/validateLoginBody";
 export { validateRegisterBody } from "./validator/validateRegisterBody";

@@ -4,7 +4,7 @@ import {
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
-  validateNumberParam,
+  validateIDParam,
 } from "@/helpers";
 import {
   addOneUserProgress,
@@ -28,13 +28,13 @@ export function addOneUserProgressHandler(req: Request, res: Response) {
 
   let valid: boolean;
   let message: string;
-  [stageId, valid, message] = validateNumberParam(req.body.stage_id);
+  [stageId, valid, message] = validateIDParam(req.body.stage_id);
   if (!valid) {
     sendBadRequestJSON(`stage_id: ${message}`, res);
     return;
   }
 
-  [noOfMissions, valid, message] = validateNumberParam(req.body.no_of_missions);
+  [noOfMissions, valid, message] = validateIDParam(req.body.no_of_missions);
   if (!valid) {
     sendBadRequestJSON(`no_of_missions: ${message}`, res);
     return;

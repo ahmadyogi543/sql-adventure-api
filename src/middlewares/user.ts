@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   sendBadRequestJSON,
   sendForbiddenJSON,
-  validateNumberParam,
+  validateIDParam,
 } from "@/helpers";
 import { UserPayload } from "./types";
 import { config } from "@/config";
@@ -18,7 +18,7 @@ interface UserRequest extends Request<UserParams> {
 }
 
 export function user(req: UserRequest, res: Response, next: NextFunction) {
-  const [id, valid, message] = validateNumberParam(req.params.id);
+  const [id, valid, message] = validateIDParam(req.params.id);
   if (!valid) {
     sendBadRequestJSON(message, res);
     return;

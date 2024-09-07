@@ -4,7 +4,7 @@ import {
   sendBadRequestJSON,
   sendInternalServerErrorJSON,
   sendNoContentJSON,
-  validateNumberParam,
+  validateIDParam,
 } from "@/helpers";
 import { getOneUserProgress } from "@/models/users-progress/getOneUserProgress";
 import { MissionAttempted } from "@/models/missions-attempted/types";
@@ -36,12 +36,12 @@ export function attemptOneMissionHandler(
 
   let valid: boolean;
   let message: string;
-  [stageId, valid, message] = validateNumberParam(req.body.stage_id);
+  [stageId, valid, message] = validateIDParam(req.body.stage_id);
   if (!valid) {
     sendBadRequestJSON(`stage_id: ${message}`, res);
     return;
   }
-  [missionId, valid, message] = validateNumberParam(req.body.mission_id);
+  [missionId, valid, message] = validateIDParam(req.body.mission_id);
   if (!valid) {
     sendBadRequestJSON(`mission_id: ${message}`, res);
     return;
