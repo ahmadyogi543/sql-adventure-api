@@ -34,6 +34,7 @@ try {
   }
 
   files.forEach((file) => {
+    console.log(file);
     const query = fs.readFileSync(path.join(__dirname, "migrations", file), {
       encoding: "utf-8",
     });
