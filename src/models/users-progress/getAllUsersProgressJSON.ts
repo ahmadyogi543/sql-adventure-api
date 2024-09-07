@@ -10,6 +10,9 @@ export function getAllUsersProgressJSON(): [UserProgressJSON[], Error?] {
         `
 SELECT
   u.id as user_id,
+  u.email as user_email,
+  u.name as user_name,
+  u.institution as user_institution,
   up.id as users_progress_id,
   up.stage_id as users_progress_stage_id,
   up.no_of_missions as users_progress_no_of_missions,

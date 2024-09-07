@@ -16,6 +16,9 @@ export type UserProgressRow = {
 
 export type UserProgressJSONRow = {
   user_id: number;
+  user_email: string;
+  user_name: string;
+  user_institution: string;
   users_progress_id?: number;
   users_progress_stage_id: number;
   users_progress_no_of_missions: number;

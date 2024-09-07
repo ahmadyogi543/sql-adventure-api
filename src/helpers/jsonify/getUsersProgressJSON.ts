@@ -11,6 +11,9 @@ export function getUsersProgressJSON(rows: UserProgressJSONRow[]) {
     if (!user) {
       user = {
         user_id: row.user_id,
+        user_email: row.user_email,
+        user_name: row.user_name,
+        user_institution: row.user_institution,
         values: [],
       };
       json.push(user);
