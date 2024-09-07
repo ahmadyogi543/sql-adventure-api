@@ -13,6 +13,7 @@ import {
 } from "@/handlers/users";
 import { admin } from "@/middlewares/admin";
 import { user } from "@/middlewares/user";
+import { getStageDataJSONHandler } from "@/handlers/utils/getStageDataHandler";
 
 export const usersRouter = Router();
 
@@ -42,3 +43,6 @@ usersRouter.delete("/progress/:id", user, deleteOneUserProgressHandler);
 
 // attempt one mission on user progress with id (i.e put attempted mission data)
 usersRouter.post("/progress/:id/attempt", user, attemptOneMissionHandler);
+
+// get stage data (progress)
+usersRouter.get("/stages/:id", user, getStageDataJSONHandler);
