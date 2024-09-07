@@ -11,7 +11,6 @@ import { MissionAttempted } from "@/models/missions-attempted/types";
 import { UserProgress } from "@/models/users-progress/types";
 import {
   addOneMissionAttempted,
-  addOneMissionAttemptedScore,
   getOneMissionAttempted,
   updateOneMissionAttempted,
 } from "@/models/missions-attempted";
@@ -19,7 +18,7 @@ import {
 type AttemptOneMissionBody = {
   stage_id?: string;
   mission_id?: string;
-  score?: string;
+  mission_name?: string;
 };
 
 interface AttemptOneMissionRequest
@@ -34,7 +33,6 @@ export function attemptOneMissionHandler(
   const userId = req.id as number;
   let stageId: number;
   let missionId: number;
-  let score: number;
 
   let valid: boolean;
   let message: string;
@@ -48,11 +46,15 @@ export function attemptOneMissionHandler(
     sendBadRequestJSON(`mission_id: ${message}`, res);
     return;
   }
-  [score, valid, message] = validateNumberParam(req.body.score);
-  if (!valid) {
-    sendBadRequestJSON(`score: ${message}`, res);
+  if (req.body.mission_name === undefined) {
+    sendBadRequestJSON(`mission_name: is missing`, res);
     return;
   }
+  if (req.body.mission_name.trim() === "") {
+    sendBadRequestJSON(`mission_name: should not be empty`, res);
+    return;
+  }
+  const missionName = req.body.mission_name;
 
   let userProgress: UserProgress | undefined;
   let missionAttempted: MissionAttempted | undefined;
@@ -77,7 +79,8 @@ export function attemptOneMissionHandler(
   if (!missionAttempted) {
     const [id, success, error] = addOneMissionAttempted(
       userProgressId,
-      missionId
+      missionId,
+      missionName
     );
     if (error) {
       sendInternalServerErrorJSON(error, res);
@@ -105,17 +108,6 @@ export function attemptOneMissionHandler(
     }
 
     missionAttemptedId = missionAttempted.id;
-  }
-
-  let success: boolean;
-  [success, error] = addOneMissionAttemptedScore(missionAttemptedId, score);
-  if (error) {
-    sendInternalServerErrorJSON(error, res);
-    return;
-  }
-  if (!success) {
-    sendBadRequestJSON("score is not valid", res);
-    return;
   }
 
   sendNoContentJSON(res);

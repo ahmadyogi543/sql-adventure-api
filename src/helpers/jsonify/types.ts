@@ -1,14 +1,15 @@
 // ++ USER PROGRESS ++
 type MissionUserProgressJSON = {
   mission_id: number;
+  mission_name: string;
   attempt: number;
-  scores: number[];
   last_attempted: string;
 };
 
 type StageUserProgressJSON = {
   stage_id: number;
   no_of_missions: number;
+  score: number;
   missions_attempted: MissionUserProgressJSON[];
   last_attempted: string | null;
 };

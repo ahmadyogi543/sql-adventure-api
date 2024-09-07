@@ -125,6 +125,7 @@ headers:
 body:
 
 - stage_id: number
+- score: number
 
 additional informations:
 
@@ -172,7 +173,7 @@ body:
 
 - stage_id: number
 - mission_id: number
-- score: number
+- mission_name: string
 
 additional informations:
 

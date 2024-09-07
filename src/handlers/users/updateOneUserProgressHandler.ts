@@ -14,6 +14,7 @@ import { UserProgress } from "@/models/users-progress/types";
 
 type Body = {
   stage_id?: string;
+  score?: string;
 };
 
 interface Request extends ExpressRequest<{}, {}, Body> {
@@ -22,9 +23,21 @@ interface Request extends ExpressRequest<{}, {}, Body> {
 
 export function updateOneUserProgressHandler(req: Request, res: Response) {
   const userId = req.id as number;
-  const [stageId, valid, message] = validateNumberParam(req.body.stage_id);
+
+  let valid: boolean;
+  let message: string;
+
+  let stageId: number;
+  [stageId, valid, message] = validateNumberParam(req.body.stage_id);
   if (!valid) {
     sendBadRequestJSON(`stage_id: ${message}`, res);
+    return;
+  }
+
+  let score: number;
+  [score, valid, message] = validateNumberParam(req.body.score);
+  if (!valid) {
+    sendBadRequestJSON(`score: ${message}`, res);
     return;
   }
 
@@ -44,7 +57,7 @@ export function updateOneUserProgressHandler(req: Request, res: Response) {
     );
   }
 
-  [success, error] = updateOneUserProgress(userId, stageId);
+  [success, error] = updateOneUserProgress(userId, stageId, score);
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;

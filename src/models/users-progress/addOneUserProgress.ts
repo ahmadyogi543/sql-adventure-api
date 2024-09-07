@@ -8,8 +8,8 @@ export function addOneUserProgress(
   try {
     const stmt = db.prepare(
       `
-      INSERT INTO users_progress (user_id, stage_id, no_of_missions, last_attempted)
-      VALUES (?, ?, ?, null);
+      INSERT INTO users_progress (user_id, stage_id, no_of_missions, score, last_attempted)
+      VALUES (?, ?, ?, 0, null);
     `.trim()
     );
     const result = stmt.run(userId, stageId, noOfMissions);

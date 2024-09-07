@@ -23,6 +23,7 @@ export function getOneUserProgress(
       userId: result.user_id,
       stageId: result.stage_id,
       noOfMissions: result.no_of_missions,
+      score: result.score,
       lastAttempted: new Date(result.last_attempted),
     };
     return [userProgress, undefined];
