@@ -1,5 +1,6 @@
 export { addOneUserProgressHandler } from "./addOneUserProgressHandler";
 export { attemptOneMissionHandler } from "./attemptOneMissionHandler";
+export { deleteOneUserHandler } from "./deleteOneUserHandler";
 export { deleteOneUserProgressHandler } from "./deleteOneUserProgressHandler";
 export { getAllUsersHandler } from "./getAllUsersHandler";
 export { getAllUsersProgressHandler } from "./getAllUsersProgressHandler";

@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   addOneUserProgressHandler,
   attemptOneMissionHandler,
+  deleteOneUserHandler,
   deleteOneUserProgressHandler,
   getAllUsersHandler,
   getAllUsersProgressHandler,
@@ -23,6 +24,9 @@ usersRouter.get("/progress", admin, getAllUsersProgressHandler);
 
 // get one user with id
 usersRouter.get("/:id", user, getOneUserHandler);
+
+// delete on user with id
+usersRouter.delete("/:id", admin, deleteOneUserHandler);
 
 // add one user progress with id (i.e initializing the progress)
 usersRouter.post("/progress/:id", user, addOneUserProgressHandler);
