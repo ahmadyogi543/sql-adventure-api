@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import { adminRouter } from "./routes/admin";
 import { authRouter } from "@/routes/auth";
 import { authenticate } from "@/middlewares/authenticate";
 import { config } from "@/config";
@@ -31,6 +32,7 @@ app.use("/", homeRouter);
 app.use("/auth", authRouter);
 app.use("/stages", authenticate, stagesRouter);
 app.use("/users", authenticate, usersRouter);
+app.use("/admin", authenticate, adminRouter);
 
 // for every other routes, send not found
 app.all("/*", notFoundHandler);
