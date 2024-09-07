@@ -29,6 +29,10 @@ db.pragma("journal_mode = WAL");
 // migrate db to create tables
 try {
   const files = ["create_users_table_up.sql", "create_stages_table_up.sql"];
+  if (process.env.NODE_ENV === "development") {
+    files.push("mock_users_table_up.sql");
+  }
+
   files.forEach((file) => {
     const query = fs.readFileSync(path.join(__dirname, "migrations", file), {
       encoding: "utf-8",
