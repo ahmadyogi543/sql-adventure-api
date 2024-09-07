@@ -29,7 +29,7 @@ db.pragma("journal_mode = WAL");
 // migrate db to create tables
 try {
   const files = ["create_users_table_up.sql", "create_stages_table_up.sql"];
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV !== "production") {
     files.push("mock_users_table_up.sql");
   }
 
