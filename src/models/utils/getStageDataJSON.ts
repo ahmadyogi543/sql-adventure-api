@@ -23,26 +23,34 @@ WITH stages AS (
   SELECT 8 UNION ALL
   SELECT 9 UNION ALL
   SELECT 10
+),
+progress_with_unlock AS (
+  SELECT 
+    up.stage_id,
+    up.score,
+    CASE 
+      WHEN up.stage_id = 1 THEN 1 -- Stage 1 is always unlocked
+      WHEN LAG(up.score) OVER (ORDER BY up.stage_id) >= 80 THEN 1 -- Unlock if the previous stage score is >= 80
+      ELSE 0
+    END AS unlock
+  FROM users_progress up
+  WHERE up.user_id = ?
 )
 SELECT 
   stages.stage_id AS id,
+  COALESCE(progress_with_unlock.unlock, CASE WHEN stages.stage_id = 1 THEN 1 ELSE 0 END) AS unlock,
   CASE 
-    WHEN stages.stage_id = 1 THEN 1 -- Ensure stage 1 is always unlocked
-    WHEN users_progress.stage_id IS NOT NULL THEN 1
-    ELSE 0
-  END AS unlock,
-  CASE 
-    WHEN users_progress.score >= 100 THEN 3
-    WHEN users_progress.score >= 50 THEN 2
-    WHEN users_progress.score >= 10 THEN 1
+    WHEN progress_with_unlock.score >= 100 THEN 3
+    WHEN progress_with_unlock.score >= 50 THEN 2
+    WHEN progress_with_unlock.score >= 10 THEN 1
     ELSE 0
   END AS star,
   CASE 
-    WHEN stages.stage_id = 1 OR users_progress.stage_id IS NOT NULL THEN '/images/stage-cards/' || stages.stage_id || '.png'
+    WHEN COALESCE(progress_with_unlock.unlock, CASE WHEN stages.stage_id = 1 THEN 1 ELSE 0 END) = 1 THEN '/images/stage-cards/' || stages.stage_id || '.png'
     ELSE '/images/stage-cards/unknown.png'
   END AS uri
 FROM stages
-LEFT JOIN users_progress ON stages.stage_id = users_progress.stage_id AND users_progress.user_id = ?
+LEFT JOIN progress_with_unlock ON stages.stage_id = progress_with_unlock.stage_id
 ORDER BY stages.stage_id;
       `.trim()
       )

@@ -9,7 +9,7 @@ export function getOneUserProgress(
     const result = db
       .prepare(
         `
-      SELECT id FROM users_progress
+      SELECT * FROM users_progress
       WHERE user_id = ? AND stage_id = ?
       `.trim()
       )

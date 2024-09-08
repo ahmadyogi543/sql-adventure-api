@@ -43,13 +43,6 @@ export function attemptOneStageHandler(req: Request, res: Response) {
     return;
   }
 
-  let score: number;
-  [score, valid, message] = validateNumber(req.body.score);
-  if (!valid) {
-    sendBadRequestJSON(`score: ${message}`, res);
-    return;
-  }
-
   const [userProgress, error] = getOneUserProgress(userId, stageId);
   if (error) {
     sendInternalServerErrorJSON(error, res);
@@ -66,6 +59,17 @@ export function attemptOneStageHandler(req: Request, res: Response) {
       return;
     }
   } else {
+    let score: number;
+    if (req.body.score) {
+      const [_score, valid, message] = validateNumber(req.body.score);
+      if (!valid) {
+        sendBadRequestJSON(message, res);
+        return;
+      }
+      score = _score;
+    } else {
+      score = userProgress.score;
+    }
     const [success, error] = updateOneUserProgress(userId, stageId, score);
     if (error) {
       sendInternalServerErrorJSON(error, res);

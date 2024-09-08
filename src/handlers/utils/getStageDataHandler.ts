@@ -1,7 +1,11 @@
+import {
+  getStageDataJSON,
+  sendInternalServerErrorJSON,
+  sendNotFoundJSON,
+  sendOKJSON,
+} from "@/helpers";
+import { getAllUsersProgressJSON } from "@/models/users-progress";
 import { Request, Response } from "express";
-
-import { sendInternalServerErrorJSON, sendOKJSON } from "@/helpers";
-import { getStageDataJSON } from "@/models/utils/getStageDataJSON";
 
 interface GetStageJSONRequest extends Request {
   id?: number;
@@ -12,20 +16,21 @@ export function getStageDataJSONHandler(
   res: Response
 ) {
   const id = req.id as number;
-
-  const [data, error] = getStageDataJSON(id);
+  const [usersProgress, error] = getAllUsersProgressJSON();
   if (error) {
     sendInternalServerErrorJSON(error, res);
     return;
   }
 
+  const userProgress = usersProgress.find((up) => up.user_id === id);
+  if (!userProgress) {
+    sendNotFoundJSON(`failed to find stage data for user with id ${id}`, res);
+    return;
+  }
+
+  const stageData = getStageDataJSON(userProgress);
   sendOKJSON(
-    {
-      stage_data: data.map((d) => ({
-        ...d,
-        unlock: d.unlock ? true : false,
-      })),
-    },
+    { stage_data: stageData },
     "retrieved stage data successfully",
     res
   );
