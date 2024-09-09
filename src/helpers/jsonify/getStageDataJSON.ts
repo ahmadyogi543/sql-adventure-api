@@ -16,11 +16,11 @@ export function getStageDataJSON(userProgress: UserProgressJSON): StageData[] {
 
   // Helper function to calculate stars based on score
   const calculateStars = (score: number): number => {
-    if (score === 100) {
+    if (score >= 80) {
       return 3;
-    } else if (score >= 80) {
+    } else if (score >= 70) {
       return 2;
-    } else if (score >= 60) {
+    } else if (score > 0) {
       return 1;
     }
     return 0;
@@ -34,7 +34,8 @@ export function getStageDataJSON(userProgress: UserProgressJSON): StageData[] {
     );
 
     // Determine if this stage is unlocked
-    let unlock = previousStageCompleted && previousStageScore >= scoreThreshold;
+    // let unlock = previousStageCompleted && previousStageScore >= scoreThreshold;
+    let unlock = previousStageCompleted;
 
     // Initialize stars and URI
     let star = 0;
