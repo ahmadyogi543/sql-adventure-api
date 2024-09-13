@@ -11,7 +11,8 @@ export function getLeaderBoardJSONHandler(req: Request, res: Response) {
 
   const transformedData = usersProgress.map((user) => {
     const totalScore = user.values.reduce((sum, stage) => sum + stage.score, 0);
-    const averageScore = totalScore / user.values.length;
+    // const averageScore = totalScore / user.values.length;
+    const averageScore = totalScore / 10;
 
     return {
       name: user.user_name,
